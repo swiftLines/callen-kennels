@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
+load_dotenv()  # reads .env from the project root
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-e!bw!m7jh86zp)73x&oahdpsm^ebpw-rogk7f0hznp+&$^u2rp"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.getenv("DJANGO_DEBUG", "1")))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]  # tighten before deploy
 
 
 # Application definition
@@ -37,6 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # my app(s)
+    "website",
 ]
 
 MIDDLEWARE = [
@@ -75,8 +80,12 @@ WSGI_APPLICATION = "callen_site.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "callen"),
+        "USER": os.getenv("DB_USER", "callen"),
+        "PASSWORD": os.getenv("DB_PASSWORD", ""),
+        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
