@@ -30,6 +30,8 @@ DEBUG = bool(int(os.getenv("DJANGO_DEBUG", "1")))
 
 ALLOWED_HOSTS = ["*"]  # tighten before deploy
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Application definition
 
