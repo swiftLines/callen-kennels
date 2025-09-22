@@ -1,0 +1,23 @@
+{% extends "website/base.html" %}
+{% block title %}Available Puppies • Callen Kennels{% endblock %}
+{% block content %}
+<h1>Available Puppies</h1>
+
+{% if puppies %}
+  <ul>
+    {% for p in puppies %}
+      <li style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem;">
+        {% if p.main_photo %}<img src="{{ p.main_photo.url }}" alt="Puppy photo" style="max-height:120px">{% endif %}
+        <div>
+          <div><strong>{{ p.name|default:"Puppy" }}</strong> — {{ p.get_sex_display|default:"" }} {{ p.color }}</div>
+          <div>From litter: {{ p.litter.dam.name }} × {{ p.litter.sire.name }}</div>
+          {% if p.price %}<div>Price: ${{ p.price|floatformat:2 }}</div>{% endif %}
+          {% if p.health_notes %}<div><small>{{ p.health_notes }}</small></div>{% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No puppies available right now. Check back soon!</p>
+{% endif %}
+{% endblock %}

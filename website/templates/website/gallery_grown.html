@@ -1,0 +1,18 @@
+{% extends "website/base.html" %}
+{% block title %}Grown Pics • Callen Kennels{% endblock %}
+{% block content %}
+<h1>Grown Pics</h1>
+
+{% if images %}
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;">
+    {% for img in images %}
+      <figure style="margin:0">
+        {% if img.image %}<img src="{{ img.image.url }}" alt="{{ img.caption }}" style="width:100%;height:auto;max-height:220px;object-fit:cover">{% endif %}
+        {% if img.caption %}<figcaption style="font-size:0.9rem">{{ img.caption }}</figcaption>{% endif %}
+      </figure>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No photos yet.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "website/base.html" %}
+{% block title %}Upcoming Litters • Callen Kennels{% endblock %}
+{% block content %}
+<h1>Upcoming Litters</h1>
+
+{% if litters %}
+  <ul>
+    {% for l in litters %}
+      <li style="margin-bottom:0.75rem;">
+        <strong>{{ l.dam.name }}</strong> × <strong>{{ l.sire.name }}</strong>
+        {% if l.expected_date %} — Expected: {{ l.expected_date|date:"M j, Y" }}{% endif %}
+        {% if l.notes %}<div><small>{{ l.notes }}</small></div>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No upcoming litters posted yet.</p>
+{% endif %}
+{% endblock %}

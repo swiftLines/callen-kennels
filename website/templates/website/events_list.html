@@ -1,0 +1,21 @@
+{% extends "website/base.html" %}
+{% block title %}Upcoming Venues • Ruff House{% endblock %}
+{% block content %}
+<h1>Upcoming Venues</h1>
+
+{% if events %}
+  <ul>
+    {% for e in events %}
+      <li style="margin-bottom:0.75rem;">
+        <strong>{{ e.start_datetime|date:"M j, Y g:ia" }}</strong>
+        — {{ e.title }}
+        {% if e.location %}@ {{ e.location }}{% endif %}
+        {% if e.details %}<div><small>{{ e.details }}</small></div>{% endif %}
+        {% if e.map_link %}<div><a href="{{ e.map_link }}" target="_blank" rel="noopener">Map</a></div>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No scheduled venues at the moment.</p>
+{% endif %}
+{% endblock %}

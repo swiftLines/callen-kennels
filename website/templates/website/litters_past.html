@@ -1,0 +1,31 @@
+{% extends "website/base.html" %}
+{% block title %}Past Litters • Callen Kennels{% endblock %}
+{% block content %}
+<h1>Past Litters</h1>
+
+{% if litters %}
+  <ul>
+    {% for l in litters %}
+      <li style="margin-bottom:1rem;">
+        <div>
+          <strong>{{ l.dam.name }}</strong> × <strong>{{ l.sire.name }}</strong>
+          {% if l.whelp_date %} — Whelped: {{ l.whelp_date|date:"M j, Y" }}{% endif %}
+        </div>
+        {% if l.puppies.all %}
+          <div>
+            Puppies:
+            {% for p in l.puppies.all %}
+              <span>{{ p.name|default:"Puppy" }} ({{ p.get_sex_display|default:"" }} {{ p.color }}){% if not forloop.last %}, {% endif %}</span>
+            {% empty %}
+              <span>—</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if l.notes %}<div><small>{{ l.notes }}</small></div>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No past litters recorded yet.</p>
+{% endif %}
+{% endblock %}

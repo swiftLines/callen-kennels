@@ -1,0 +1,7 @@
+{% extends "website/base.html" %}
+{% block content %}
+  <h1>{{ object.name }}</h1>
+  {% if object.photo %}<img src="{{ object.photo.url }}" alt="" style="max-height:240px">{% endif %}
+  <p>Sex: {{ object.get_sex_display }}{% if object.dob %} • DOB: {{ object.dob|date:"M j, Y" }}{% endif %}</p>
+  <p>{{ object.bio }}</p>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "website/base.html" %}
+{% block content %}
+  <h1>{% if request.path|slice:":-1"|endswith:"girls" %}My Girls{% else %}My Boys{% endif %}</h1>
+  <ul>
+    {% for d in dogs %}
+      <li>
+        {% if d.photo %}<img src="{{ d.photo.url }}" alt="" style="max-height:140px">{% endif %}
+        <a href="{% url 'dog_detail' slug=d.slug %}"><strong>{{ d.name }}</strong></a> — {{ d.color }}
+      </li>
+    {% empty %}<li>No dogs yet.</li>{% endfor %}
+  </ul>
+{% endblock %}

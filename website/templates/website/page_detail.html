@@ -1,0 +1,7 @@
+{% extends "website/base.html" %}
+{% block title %}{{ object.title }} • Callen Kennels{% endblock %}
+{% block content %}
+  <h1>{{ object.title }}</h1>
+  {% if object.hero_image %}<img src="{{ object.hero_image.url }}" alt="" style="max-height:240px">{% endif %}
+  <div style="white-space:pre-wrap">{{ object.body }}</div>
+{% endblock %}

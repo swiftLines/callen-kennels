@@ -1,0 +1,20 @@
+{% extends "website/base.html" %}
+{% block title %}{{ object.name }} • Supplies{% endblock %}
+{% block content %}
+<article>
+  <h1>{{ object.name }}</h1>
+  {% if object.image %}<img src="{{ object.image.url }}" alt="{{ object.name }}" style="max-height:240px">{% endif %}
+
+  {% if object.category %}<p><strong>Category:</strong> {{ object.category }}</p>{% endif %}
+  {% if object.price %}<p><strong>Price:</strong> ${{ object.price|floatformat:2 }}</p>{% endif %}
+  <p><strong>Status:</strong> {% if object.in_stock %}In stock{% else %}Out of stock{% endif %}</p>
+
+  {% if object.description %}
+    <h2>Description</h2>
+    <div style="white-space:pre-wrap">{{ object.description }}</div>
+  {% endif %}
+
+  <hr>
+  <p><em>To inquire or order:</em> please use the Contact page.</p>
+</article>
+{% endblock %}
