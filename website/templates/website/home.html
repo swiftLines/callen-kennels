@@ -1,0 +1,55 @@
+{% extends "website/base.html" %}
+{% block title %}Home • Callen Kennels{% endblock %}
+{% block content %}
+  <h1>Welcome to Callen Kennels</h1>
+
+  <section>
+    <h2>Available Puppies</h2>
+    {% if available_puppies %}
+      <ul>
+        {% for p in available_puppies %}
+          <li>
+            {% if p.main_photo %}<img src="{{ p.main_photo.url }}" alt="" style="max-height:120px">{% endif %}
+            <div>
+              <strong>{{ p.name|default:"Puppy" }}</strong> • {{ p.get_sex_display|default:"" }} • {{ p.color }}
+              <div>From litter: {{ p.litter }}</div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No puppies available right now.</p>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Upcoming Litters</h2>
+    <ul>
+      {% for l in upcoming_litters %}
+        <li>{{ l.dam.name }} × {{ l.sire.name }} — {{ l.expected_date|date:"M j, Y" }}</li>
+      {% empty %}
+        <li>None scheduled yet.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Grown Pics</h2>
+    <div>
+      {% for img in grown_images %}
+        {% if img.image %}<img src="{{ img.image.url }}" alt="{{ img.caption }}" style="max-height:120px">{% endif %}
+      {% empty %}<p>Photos coming soon.</p>{% endfor %}
+    </div>
+  </section>
+
+  <section>
+    <h2>Upcoming Venues</h2>
+    <ul>
+      {% for e in next_events %}
+        <li>{{ e.start_datetime|date:"M j, Y g:ia" }} — {{ e.title }} @ {{ e.location }}</li>
+      {% empty %}
+        <li>No upcoming events.</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}
