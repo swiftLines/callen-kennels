@@ -1,6 +1,6 @@
 {% extends "website/base.html" %}
 {% block content %}
-  <h1>{% if request.path|slice:":-1"|endswith:"girls" %}My Girls{% else %}My Boys{% endif %}</h1>
+  <h1>My Boys</h1>
   <ul>
     {% for d in dogs %}
       <li>
