@@ -28,7 +28,7 @@ class GirlsListView(ListView):
     model = Dog
     template_name = "website/dogs_girls.html"
     context_object_name = "dogs"
-    queryset = Dog.objects.filter(sex=Dog.FEMALE, retired=False).order_by("name")
+    queryset = Dog.objects.filter(sex=Dog.FEMALE).order_by("name")
 
 
 class BoysListView(ListView):
