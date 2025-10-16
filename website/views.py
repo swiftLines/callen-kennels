@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 from django.utils import timezone
 from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem
@@ -17,11 +18,13 @@ class HomeView(TemplateView):
 
 class PageDetailView(DetailView):
     model = Page
-    slug_field = "slug"
-    slug_url_kwarg = "slug"
+    # slug_field = "slug"
+    # slug_url_kwarg = "slug"
     template_name = "website/page_detail.html"
     queryset = Page.objects.filter(is_published=True)
 
+    def get_object(self):
+        return get_object_or_404(Page, slug=self.kwargs["slug"], is_published=True)
 
 # Dogs
 class GirlsListView(ListView):
