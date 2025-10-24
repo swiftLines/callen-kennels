@@ -18,13 +18,18 @@ class HomeView(TemplateView):
 
 class PageDetailView(DetailView):
     model = Page
-    # slug_field = "slug"
-    # slug_url_kwarg = "slug"
+    slug_field = "slug"
+    slug_url_kwarg = "slug"
     template_name = "website/page_detail.html"
+    context_object_name = "page"
     queryset = Page.objects.filter(is_published=True)
 
-    def get_object(self):
-        return get_object_or_404(Page, slug=self.kwargs["slug"], is_published=True)
+    def get_template_names(self):
+        obj = getattr(self, "object", None) or self.get_object()
+        if obj.slug == "about":
+            return ["website/about.html"]
+        return [self.template_name]
+    
 
 # Dogs
 class GirlsListView(ListView):
