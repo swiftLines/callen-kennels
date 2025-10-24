@@ -8,7 +8,13 @@ class PageAdmin(admin.ModelAdmin):
     list_filter = ("is_published",)
     search_fields = ("title", "body")
     prepopulated_fields = {"slug": ("title",)}
-
+    fields = (
+        "title", "slug", "is_published",
+        "hero_image",
+        "body",
+        "image_one", "image_two",   # <- NEW
+    )
+    
 
 @admin.register(models.Dog)
 class DogAdmin(admin.ModelAdmin):

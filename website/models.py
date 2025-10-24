@@ -17,6 +17,11 @@ class Page(TimeStampedModel):
     slug = models.SlugField(max_length=220, unique=True, blank=True)
     hero_image = models.ImageField(upload_to="pages/hero/", blank=True, null=True)
     body = models.TextField(blank=True)
+
+    # NEW
+    image_one = models.ImageField(upload_to="pages/about/", blank=True, null=True)
+    image_two = models.ImageField(upload_to="pages/about/", blank=True, null=True)
+
     is_published = models.BooleanField(default=True)
 
     class Meta:
