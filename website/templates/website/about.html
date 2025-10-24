@@ -1,0 +1,55 @@
+{% extends "website/base.html" %}
+{% block title %}About Callen Kennels{% endblock %}
+
+{% block content %}
+  <article class="about">
+    <h1>About Callen Kennels</h1>
+
+    {% if page.body %}
+      <div class="about__text">{{ page.body|linebreaks }}</div>
+    {% endif %}
+
+    <div class="about__photos">
+      <div class="about__photo">
+        {% if page.image_one %}
+          <img src="{{ page.image_one.url }}" alt="About photo 1">
+        {% else %}
+          <div class="placeholder">Placeholder for Picture 1</div>
+        {% endif %}
+      </div>
+      <div class="about__photo">
+        {% if page.image_two %}
+          <img src="{{ page.image_two.url }}" alt="About photo 2">
+        {% else %}
+          <div class="placeholder">Placeholder for Picture 2</div>
+        {% endif %}
+      </div>
+    </div>
+  </article>
+
+  <style>
+    .about h1 { margin: 0 0 1rem; }
+    .about__text { margin-bottom: 2rem; line-height: 1.6; }
+    .about__photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .about__photo img {
+      width: 100%; height: 260px; object-fit: cover;
+      border: 1px solid #ccc; border-radius: 4px;
+      background: #fff;
+    }
+    .placeholder {
+      width: 100%; height: 260px;
+      display: grid; place-items: center;
+      border: 1px solid #bbb; border-radius: 4px;
+      color: #555; background: #fafafa;
+      font-size: .95rem;
+    }
+    @media (max-width: 800px) {
+      .about__photos { grid-template-columns: 1fr; }
+    }
+  </style>
+{% endblock %}
