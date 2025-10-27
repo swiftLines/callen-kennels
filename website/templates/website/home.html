@@ -11,7 +11,7 @@
       {% if home and home.left_image %}
         <img src="{{ home.left_image.url }}" alt="{{ home.left_title }}" class="home-image">
       {% endif %}
-      <h3><a href="{{ home.left_link|default:'/page/about/' }}">{{ home.left_title|default:"Callen Kennels" }}</a></h3>
+      <h3>{{ home.left_title|default:"Callen Kennels" }}</h3>
       <p>{{ home.left_blurb|default:"Breeding Miniature American Shepherds since XX..." }}</p>
       <p class="btn-row">
         <a class="btn" href="{{ home.left_link|default:'/page/about/' }}">
@@ -25,7 +25,7 @@
       {% if home and home.right_image %}
         <img src="{{ home.right_image.url }}" alt="{{ home.right_title }}" class="home-image">
       {% endif %}
-      <h3><a href="{{ home.right_link|default:'/ruff-house/supplies/' }}">{{ home.right_title|default:"Ruff House Dog Supplies LLC" }}</a></h3>
+      <h3>{{ home.right_title|default:"Ruff House Dog Supplies LLC" }}</h3>
       <p>{{ home.right_blurb|default:"USA-made dog supplies available at venues/events..." }}</p>
       <p class="btn-row">
         <a class="btn" href="{{ home.right_link|default:'/ruff-house/supplies/' }}">
@@ -54,11 +54,43 @@
   }
   .home-wrapper h1 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; }
   .home-grid { display:grid; grid-template-columns: 1fr 1fr; gap:2rem; align-items:start; margin-bottom:2rem; }
-  .home-section { display:flex; flex-direction:column; align-items:center; }
-  .home-image { max-height: 160px; width:auto; margin-bottom:.75rem; }
-  .home-section h3 { font-weight:700; text-decoration:underline; margin:.25rem 0; }
-  .home-section p { max-width:90%; text-align:left; font-size:.95rem; line-height:1.4; }
+  .home-section { display:flex; flex-direction:column; align-items:center; width: 100%; max-width: 420px;}
+  .home-image { max-height: 230px; width:auto; margin-bottom:1rem; }
+  .home-section h3,
+  .home-section p {
+    text-align: left;
+    width: 85%;               /* give them a consistent text column */
+    max-width: 380px;
+  }
+  .home-section h3 { font-weight:700; text-decoration:underline; margin: 0.4rem 0 0.35rem;}
   .contact-block { text-align:center; line-height:1.6; font-size:.9rem; border-top:1px solid #ddd; padding-top:1rem; }
   @media (max-width: 768px) { .home-grid { grid-template-columns: 1fr; } }
+  /* Buttons: solid black, white text, centered, consistent width */
+.btn-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;   /* centers the button itself */
+  margin-top: 1rem;
+}
+
+.btn {
+  display: inline-flex;       /* allows centering text inside */
+  justify-content: center;
+  align-items: center;
+  min-width: 170px;
+  padding: 0.6rem 1rem;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn:hover { background: #000; border-color: #000; color: #fff; }
+.btn:active { transform: translateY(1px); }
 </style>
 {% endblock %}
