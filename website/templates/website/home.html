@@ -1,55 +1,54 @@
 {% extends "website/base.html" %}
 {% block title %}Home • Callen Kennels{% endblock %}
+
 {% block content %}
-  <h1>Welcome to Callen Kennels</h1>
+<div class="home-wrapper">
+  <h1>{{ home.heading|default:"Welcome to Callen Kennels & Ruff House Dog Supplies LLC!" }}</h1>
 
-  <section>
-    <h2>Available Puppies</h2>
-    {% if available_puppies %}
-      <ul>
-        {% for p in available_puppies %}
-          <li>
-            {% if p.main_photo %}<img src="{{ p.main_photo.url }}" alt="" style="max-height:120px">{% endif %}
-            <div>
-              <strong>{{ p.name|default:"Puppy" }}</strong> • {{ p.get_sex_display|default:"" }} • {{ p.color }}
-              <div>From litter: {{ p.litter }}</div>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No puppies available right now.</p>
-    {% endif %}
-  </section>
-
-  <section>
-    <h2>Upcoming Litters</h2>
-    <ul>
-      {% for l in upcoming_litters %}
-        <li>{{ l.dam.name }} × {{ l.sire.name }} — {{ l.expected_date|date:"M j, Y" }}</li>
-      {% empty %}
-        <li>None scheduled yet.</li>
-      {% endfor %}
-    </ul>
-  </section>
-
-  <section>
-    <h2>Grown Pics</h2>
-    <div>
-      {% for img in grown_images %}
-        {% if img.image %}<img src="{{ img.image.url }}" alt="{{ img.caption }}" style="max-height:120px">{% endif %}
-      {% empty %}<p>Photos coming soon.</p>{% endfor %}
+  <div class="home-grid">
+    <!-- Left -->
+    <div class="home-section">
+      {% if home and home.left_image %}
+        <img src="{{ home.left_image.url }}" alt="{{ home.left_title }}" class="home-image">
+      {% endif %}
+      <h3><a href="{{ home.left_link|default:'/page/about/' }}">{{ home.left_title|default:"Callen Kennels" }}</a></h3>
+      <p>{{ home.left_blurb|default:"Breeding Miniature American Shepherds since XX..." }}</p>
     </div>
-  </section>
 
-  <section>
-    <h2>Upcoming Venues</h2>
-    <ul>
-      {% for e in next_events %}
-        <li>{{ e.start_datetime|date:"M j, Y g:ia" }} — {{ e.title }} @ {{ e.location }}</li>
-      {% empty %}
-        <li>No upcoming events.</li>
-      {% endfor %}
-    </ul>
-  </section>
+    <!-- Right -->
+    <div class="home-section">
+      {% if home and home.right_image %}
+        <img src="{{ home.right_image.url }}" alt="{{ home.right_title }}" class="home-image">
+      {% endif %}
+      <h3><a href="{{ home.right_link|default:'/ruff-house/supplies/' }}">{{ home.right_title|default:"Ruff House Dog Supplies LLC" }}</a></h3>
+      <p>{{ home.right_blurb|default:"USA-made dog supplies available at venues/events..." }}</p>
+    </div>
+  </div>
+
+  <div class="contact-block">
+    <h4>{{ home.contact_heading|default:"Contact Information" }}</h4>
+    <p>
+      {{ home.contact_name|default:"Sue Callen" }}<br>
+      {{ home.contact_phone|default:"518-XXX-XXXX" }}<br>
+      {% if home.contact_email %}<a href="mailto:{% firstof home.contact_email '' %}">{{ home.contact_email }}</a><br>{% endif %}
+      {{ home.contact_address|default:"Rensselaerville, NY" }}
+    </p>
+  </div>
+</div>
+
+<style>
+  .home-wrapper {
+    border: 1px solid #ccc; background:#fff;
+    padding: 1.5rem 1rem 2rem; text-align:center;
+    max-width: 1000px; margin: 0 auto;
+  }
+  .home-wrapper h1 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; }
+  .home-grid { display:grid; grid-template-columns: 1fr 1fr; gap:2rem; align-items:start; margin-bottom:2rem; }
+  .home-section { display:flex; flex-direction:column; align-items:center; }
+  .home-image { max-height: 160px; width:auto; margin-bottom:.75rem; }
+  .home-section h3 { font-weight:700; text-decoration:underline; margin:.25rem 0; }
+  .home-section p { max-width:90%; text-align:left; font-size:.95rem; line-height:1.4; }
+  .contact-block { text-align:center; line-height:1.6; font-size:.9rem; border-top:1px solid #ddd; padding-top:1rem; }
+  @media (max-width: 768px) { .home-grid { grid-template-columns: 1fr; } }
+</style>
 {% endblock %}
