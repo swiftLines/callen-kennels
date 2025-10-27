@@ -14,7 +14,7 @@ class PageAdmin(admin.ModelAdmin):
         "body",
         "image_one", "image_two",   # <- NEW
     )
-    
+
 
 @admin.register(models.Dog)
 class DogAdmin(admin.ModelAdmin):
@@ -67,3 +67,21 @@ class SupplyItemAdmin(admin.ModelAdmin):
     list_filter = ("category", "in_stock", "is_published")
     search_fields = ("name", "description")
     prepopulated_fields = {"slug": ("name",)}
+
+
+@admin.register(models.Homepage)
+class HomepageAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "updated_at")
+    fieldsets = (
+        (None, {"fields": ("heading",)}),
+        ("Left block (Callen Kennels)", {"fields": ("left_title","left_blurb","left_image","left_link")}),
+        ("Right block (Ruff House)", {"fields": ("right_title","right_blurb","right_image","right_link")}),
+        ("Contact", {"fields": ("contact_heading","contact_name","contact_phone","contact_email","contact_address")}),
+    )
+
+    def has_add_permission(self, request):
+        # Allow only one row
+        if models.Homepage.objects.exists():
+            return False
+        return super().has_add_permission(request)
+    
