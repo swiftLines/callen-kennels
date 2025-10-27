@@ -223,6 +223,9 @@ class Homepage(models.Model):
         default="/page/about/",  # you can store a URL or a path here
         help_text="Internal path or full URL (e.g. /page/about/ or https://...)",
     )
+    left_button_label = models.CharField(            # ← NEW
+        max_length=40, default="Learn More", blank=True
+    )
 
     # Right block (Ruff House)
     right_title = models.CharField(max_length=160, default="Ruff House Dog Supplies LLC")
@@ -232,6 +235,9 @@ class Homepage(models.Model):
         max_length=200,
         default="/ruff-house/supplies/",
         help_text="Internal path or full URL",
+    )
+    right_button_label = models.CharField(           # ← NEW
+        max_length=40, default="View Supplies", blank=True
     )
 
     # Contact block

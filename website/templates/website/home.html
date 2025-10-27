@@ -13,6 +13,11 @@
       {% endif %}
       <h3><a href="{{ home.left_link|default:'/page/about/' }}">{{ home.left_title|default:"Callen Kennels" }}</a></h3>
       <p>{{ home.left_blurb|default:"Breeding Miniature American Shepherds since XX..." }}</p>
+      <p class="btn-row">
+        <a class="btn" href="{{ home.left_link|default:'/page/about/' }}">
+          {{ home.left_button_label|default:"Learn More" }}
+        </a>
+      </p>
     </div>
 
     <!-- Right -->
@@ -22,6 +27,11 @@
       {% endif %}
       <h3><a href="{{ home.right_link|default:'/ruff-house/supplies/' }}">{{ home.right_title|default:"Ruff House Dog Supplies LLC" }}</a></h3>
       <p>{{ home.right_blurb|default:"USA-made dog supplies available at venues/events..." }}</p>
+      <p class="btn-row">
+        <a class="btn" href="{{ home.right_link|default:'/ruff-house/supplies/' }}">
+          {{ home.right_button_label|default:"View Supplies" }}
+        </a>
+      </p>
     </div>
   </div>
 

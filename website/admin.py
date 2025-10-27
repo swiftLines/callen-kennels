@@ -74,8 +74,8 @@ class HomepageAdmin(admin.ModelAdmin):
     list_display = ("__str__", "updated_at")
     fieldsets = (
         (None, {"fields": ("heading",)}),
-        ("Left block (Callen Kennels)", {"fields": ("left_title","left_blurb","left_image","left_link")}),
-        ("Right block (Ruff House)", {"fields": ("right_title","right_blurb","right_image","right_link")}),
+        ("Left block (Callen Kennels)", {"fields": ("left_title","left_blurb","left_image","left_link", "left_button_label")}),
+        ("Right block (Ruff House)", {"fields": ("right_title","right_blurb","right_image","right_link", "right_button_label")}),
         ("Contact", {"fields": ("contact_heading","contact_name","contact_phone","contact_email","contact_address")}),
     )
 
