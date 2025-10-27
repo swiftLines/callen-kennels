@@ -208,3 +208,45 @@ class SupplyItem(TimeStampedModel):
         if not self.slug:
             self.slug = slugify(self.name)[:200]
         super().save(*args, **kwargs)
+
+
+class Homepage(models.Model):
+    # Top heading
+    heading = models.CharField(max_length=200, default="Welcome to Callen Kennels & Ruff House Dog Supplies LLC!")
+
+    # Left block (Callen Kennels)
+    left_title = models.CharField(max_length=120, default="Callen Kennels")
+    left_blurb = models.TextField(blank=True)
+    left_image = models.ImageField(upload_to="home/", blank=True, null=True)
+    left_link = models.CharField(
+        max_length=200,
+        default="/page/about/",  # you can store a URL or a path here
+        help_text="Internal path or full URL (e.g. /page/about/ or https://...)",
+    )
+
+    # Right block (Ruff House)
+    right_title = models.CharField(max_length=160, default="Ruff House Dog Supplies LLC")
+    right_blurb = models.TextField(blank=True)
+    right_image = models.ImageField(upload_to="home/", blank=True, null=True)
+    right_link = models.CharField(
+        max_length=200,
+        default="/ruff-house/supplies/",
+        help_text="Internal path or full URL",
+    )
+
+    # Contact block
+    contact_heading = models.CharField(max_length=120, default="Contact Information")
+    contact_name = models.CharField(max_length=120, default="Sue Callen")
+    contact_phone = models.CharField(max_length=60, blank=True, default="518-XXX-XXXX")
+    contact_email = models.EmailField(blank=True, default="tsuc4954@gmail.com")
+    contact_address = models.CharField(max_length=200, blank=True, default="140 Littner Rd, Rensselaerville, NY")
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Homepage"
+        verbose_name_plural = "Homepage"
+
+    def __str__(self):
+        return "Homepage content"
+    
