@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 from django.utils import timezone
-from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem
+from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem, Homepage
 
 
 class HomeView(TemplateView):
@@ -9,10 +9,11 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["available_puppies"] = Puppy.objects.filter(status=Puppy.AVAILABLE)[:6]
-        ctx["upcoming_litters"] = Litter.objects.filter(status=Litter.UPCOMING).order_by("expected_date")[:3]
-        ctx["grown_images"] = GalleryImage.objects.filter(is_published=True, category=GalleryImage.GROWN)[:8]
-        ctx["next_events"] = Event.objects.filter(is_published=True, start_datetime__gte=timezone.now()).order_by("start_datetime")[:3]
+        ctx["home"] = Homepage.objects.first()
+        # ctx["available_puppies"] = Puppy.objects.filter(status=Puppy.AVAILABLE)[:6]
+        # ctx["upcoming_litters"] = Litter.objects.filter(status=Litter.UPCOMING).order_by("expected_date")[:3]
+        # ctx["grown_images"] = GalleryImage.objects.filter(is_published=True, category=GalleryImage.GROWN)[:8]
+        # ctx["next_events"] = Event.objects.filter(is_published=True, start_datetime__gte=timezone.now()).order_by("start_datetime")[:3]
         return ctx
 
 
