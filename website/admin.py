@@ -99,3 +99,29 @@ class AboutPageAdmin(admin.ModelAdmin):
         if models.AboutPage.objects.exists():
             return False
         return super().has_add_permission(request)
+
+
+@admin.register(models.AboutBreedPage)
+class AboutBreedPageAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "updated_at")
+    fieldsets = (
+        (None, {"fields": ("title", "header_image", "intro_paragraph")}),
+        ("Breed Details", {
+            "fields": (
+                "height",
+                "weight",
+                "colors",
+                "eyes",
+                "coat",
+                "temperament",
+                "breed_tendencies",
+                "exercise_needed",
+            )
+        }),
+    )
+
+    def has_add_permission(self, request):
+        # only one record
+        if models.AboutBreedPage.objects.exists():
+            return False
+        return super().has_add_permission(request)
