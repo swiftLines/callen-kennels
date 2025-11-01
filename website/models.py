@@ -271,3 +271,30 @@ class AboutPage(models.Model):
 
     def __str__(self):
         return "About Callen Kennels"
+
+class AboutBreedPage(models.Model):
+    title = models.CharField(max_length=120, default="About the Breed")
+    header_image = models.ImageField(upload_to="about/", blank=True, null=True)
+    intro_paragraph = models.TextField(
+        blank=True,
+        help_text="Top paragraph describing the Miniature American Shepherd."
+    )
+
+    # structured fields (like your screenshot)
+    height = models.CharField(max_length=120, blank=True, default="")
+    weight = models.CharField(max_length=120, blank=True, default="")
+    colors = models.CharField(max_length=200, blank=True, default="")
+    eyes = models.CharField(max_length=200, blank=True, default="")
+    coat = models.CharField(max_length=200, blank=True, default="")
+    temperament = models.CharField(max_length=250, blank=True, default="")
+    breed_tendencies = models.CharField(max_length=250, blank=True, default="")
+    exercise_needed = models.CharField(max_length=200, blank=True, default="")
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "About the Breed Page"
+        verbose_name_plural = "About the Breed Page"
+
+    def __str__(self):
+        return "About the Breed"
