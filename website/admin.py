@@ -85,3 +85,17 @@ class HomepageAdmin(admin.ModelAdmin):
             return False
         return super().has_add_permission(request)
     
+
+@admin.register(models.AboutPage)
+class AboutPageAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "updated_at")
+    fieldsets = (
+        (None, {"fields": ("title", "header_image", "intro_paragraph", "body_paragraph")}),
+        ("Gallery", {"fields": ("image_1", "image_2")}),
+    )
+
+    def has_add_permission(self, request):
+        # Only one About page
+        if models.AboutPage.objects.exists():
+            return False
+        return super().has_add_permission(request)

@@ -256,3 +256,18 @@ class Homepage(models.Model):
     def __str__(self):
         return "Homepage content"
     
+class AboutPage(models.Model):
+    title = models.CharField(max_length=120, default="About Callen Kennels")
+    header_image = models.ImageField(upload_to="about/", blank=True, null=True)
+    intro_paragraph = models.TextField(blank=True)
+    body_paragraph = models.TextField(blank=True)
+    image_1 = models.ImageField(upload_to="about/", blank=True, null=True)
+    image_2 = models.ImageField(upload_to="about/", blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "About Page"
+        verbose_name_plural = "About Page"
+
+    def __str__(self):
+        return "About Callen Kennels"
