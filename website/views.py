@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 from django.utils import timezone
-from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage
+from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage
 
 
 class HomeView(TemplateView):
@@ -113,4 +113,13 @@ class AboutPageView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["about"] = AboutPage.objects.first()
+        return ctx
+    
+
+class AboutBreedPageView(TemplateView):
+    template_name = "website/about_breed.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["breed"] = AboutBreedPage.objects.first()
         return ctx
