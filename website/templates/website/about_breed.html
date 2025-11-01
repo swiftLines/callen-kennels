@@ -1,0 +1,106 @@
+{% extends "website/base.html" %}
+{% block title %}About the Breed • Callen Kennels{% endblock %}
+
+{% block content %}
+<div class="breed-box">
+  {% if breed and breed.header_image %}
+    <img src="{{ breed.header_image.url }}" alt="{{ breed.title }}" class="breed-logo">
+  {% else %}
+    <div class="breed-logo breed-logo--placeholder"></div>
+  {% endif %}
+
+  <h2 class="breed-title">
+    {{ breed.title|default:"About the Breed" }}
+  </h2>
+
+  {% if breed and breed.intro_paragraph %}
+    <p class="breed-text">{{ breed.intro_paragraph }}</p>
+  {% endif %}
+
+  <div class="breed-attrs">
+    {% if breed.height %}
+      <p><strong>Height:</strong> {{ breed.height }}</p>
+    {% endif %}
+    {% if breed.weight %}
+      <p><strong>Weight:</strong> {{ breed.weight }}</p>
+    {% endif %}
+    {% if breed.colors %}
+      <p><strong>Colors:</strong> {{ breed.colors }}</p>
+    {% endif %}
+    {% if breed.eyes %}
+      <p><strong>Eyes:</strong> {{ breed.eyes }}</p>
+    {% endif %}
+    {% if breed.coat %}
+      <p><strong>Coat:</strong> {{ breed.coat }}</p>
+    {% endif %}
+    {% if breed.temperament %}
+      <p><strong>Temperament:</strong> {{ breed.temperament }}</p>
+    {% endif %}
+    {% if breed.breed_tendencies %}
+      <p><strong>Breed Tendencies:</strong> {{ breed.breed_tendencies }}</p>
+    {% endif %}
+    {% if breed.exercise_needed %}
+      <p><strong>Exercise Needed:</strong> {{ breed.exercise_needed }}</p>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .breed-box {
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid #bfbfbf;
+    background: #fff;
+    padding: 0 0 40px 0;
+  }
+
+  .breed-logo {
+    display: block;
+    max-width: 340px;
+    height: auto;
+    margin: 20px 0 20px 70px;
+  }
+
+  .breed-logo--placeholder {
+    height: 80px;
+    margin: 20px 0 0 70px;
+  }
+
+  .breed-title {
+    margin: 0 0 14px 70px;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .breed-text {
+    margin: 0 70px 12px 70px;
+    max-width: 78%;
+    line-height: 1.5;
+  }
+
+  .breed-attrs {
+    margin: 15px 70px 0 70px;
+    max-width: 78%;
+  }
+
+  .breed-attrs p {
+    margin: 0 0 5px 0;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .breed-box {
+      border-left: 0;
+      border-right: 0;
+    }
+    .breed-logo,
+    .breed-title,
+    .breed-text,
+    .breed-attrs {
+      margin-left: 20px;
+      margin-right: 20px;
+      max-width: 100%;
+    }
+  }
+</style>
+{% endblock %}
