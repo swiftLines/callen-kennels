@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     path("about/", views.AboutPageView.as_view(), name="about"),
+    path("about/the-breed/", views.AboutBreedPageView.as_view(), name="about_breed"),
 
     # About / Breed info / Contact (use Page model slugs)
     path("page/<slug:slug>/", views.PageDetailView.as_view(), name="page_detail"),
