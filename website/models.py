@@ -281,14 +281,14 @@ class AboutBreedPage(models.Model):
     )
 
     # structured fields (like your screenshot)
-    height = models.CharField(max_length=120, blank=True, default="")
-    weight = models.CharField(max_length=120, blank=True, default="")
-    colors = models.CharField(max_length=200, blank=True, default="")
-    eyes = models.CharField(max_length=200, blank=True, default="")
-    coat = models.CharField(max_length=200, blank=True, default="")
-    temperament = models.CharField(max_length=250, blank=True, default="")
-    breed_tendencies = models.CharField(max_length=250, blank=True, default="")
-    exercise_needed = models.CharField(max_length=200, blank=True, default="")
+    height = models.CharField(max_length=120, blank=True, default="14-18 inches")
+    weight = models.CharField(max_length=120, blank=True, default="20-40 lbs")
+    colors = models.CharField(max_length=200, blank=True, default="Black Tri, Red Tri, Blue Merle, Red Merle")
+    eyes = models.CharField(max_length=200, blank=True, default="Blue, Brown, Hazel, Amber")
+    coat = models.CharField(max_length=200, blank=True, default="Medium Double Coat")
+    temperament = models.CharField(max_length=250, blank=True, default="Intelligent, Energetic, Loyal, Trainable")
+    breed_tendencies = models.CharField(max_length=250, blank=True, default="Herding Behavior, Guardian Instinct")
+    exercise_needed = models.CharField(max_length=200, blank=True, default="Moderate")
 
     updated_at = models.DateTimeField(auto_now=True)
 
