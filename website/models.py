@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
+from datetime import date
 
 
 class TimeStampedModel(models.Model):
@@ -131,15 +132,20 @@ class Puppy(TimeStampedModel):
 
     litter = models.ForeignKey(Litter, on_delete=models.CASCADE, related_name="puppies")
     name = models.CharField(max_length=120, blank=True)
+    birth_date = models.DateField(blank=True, null=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, blank=True)
     color = models.CharField(max_length=120, blank=True)
 
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=AVAILABLE)
 
-    main_photo = models.ImageField(upload_to="puppies/main/", blank=True, null=True)
-    health_notes = models.TextField(blank=True)
-    contract_pdf = models.FileField(upload_to="puppies/contracts/", blank=True, null=True)
+     # up to 4 photos
+    photo_1 = models.ImageField(upload_to="puppies/", blank=True, null=True)
+    photo_2 = models.ImageField(upload_to="puppies/", blank=True, null=True)
+    photo_3 = models.ImageField(upload_to="puppies/", blank=True, null=True)
+    photo_4 = models.ImageField(upload_to="puppies/", blank=True, null=True)
+    # health_notes = models.TextField(blank=True)
+    # contract_pdf = models.FileField(upload_to="puppies/contracts/", blank=True, null=True)
 
     class Meta:
         ordering = ["litter", "name"]
@@ -147,6 +153,16 @@ class Puppy(TimeStampedModel):
     def __str__(self):
         base = self.name or "Puppy"
         return f"{base} – {self.litter}"
+    
+    @property
+    def age_in_months(self):
+        if not self.birth_date:
+            return None
+        today = date.today()
+        months = (today.year - self.birth_date.year) * 12 + (today.month - self.birth_date.month)
+        if today.day < self.birth_date.day:
+            months -= 1
+        return max(months, 0)
 
 
 # ---- Galleries ----
