@@ -1,12 +1,18 @@
 {% extends "website/base.html" %}
-{% block title %}Puppies Available Now! • Callen Kennels{% endblock %}
+{% block title %}{{ puppies_page.title|default:"Puppies Available Now! • Callen Kennels" }}{% endblock %}
 
 {% block content %}
 <div class="puppies-box">
-  <!-- top logo + heading -->
-  <img src="/static/images/callen_logo.png" alt="Callen Kennels" class="puppies-logo">
+  <!-- top logo + heading (admin-controlled) -->
+  {% if puppies_page and puppies_page.header_image %}
+    <img src="{{ puppies_page.header_image.url }}" alt="Puppies header" class="puppies-logo">
+  {% else %}
+    <img src="/static/images/callen_logo.png" alt="Callen Kennels" class="puppies-logo">
+  {% endif %}
 
-  <h1 class="puppies-heading">Puppies Available Now!</h1>
+  <h1 class="puppies-heading">
+    {{ puppies_page.heading|default:"Puppies Available Now!" }}
+  </h1>
 
   {% if puppies %}
     {% for p in puppies %}
