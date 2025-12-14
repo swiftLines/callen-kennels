@@ -314,3 +314,31 @@ class AboutBreedPage(models.Model):
 
     def __str__(self):
         return "About the Breed"
+    
+
+class PuppiesPage(models.Model):
+    title = models.CharField(
+        max_length=150,
+        default="Puppies Available Now! • Callen Kennels",
+        help_text="Browser tab title."
+    )
+    heading = models.CharField(
+        max_length=150,
+        default="Puppies Available Now!",
+        help_text="Big heading shown above the puppies list."
+    )
+    header_image = models.ImageField(
+        upload_to="puppies/header/",
+        blank=True,
+        null=True,
+        help_text="Image shown at the top of the page (e.g. Callen logo)."
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Puppies Available Page"
+        verbose_name_plural = "Puppies Available Page"
+
+    def __str__(self):
+        return "Puppies Available Page"
+

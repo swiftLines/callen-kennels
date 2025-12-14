@@ -1,4 +1,136 @@
 {% extends "website/base.html" %}
+{% block title %}Puppies Available Now! • Callen Kennels{% endblock %}
+
+{% block content %}
+<div class="puppies-box">
+  <!-- top logo + heading -->
+  <img src="/static/images/callen_logo.png" alt="Callen Kennels" class="puppies-logo">
+
+  <h1 class="puppies-heading">Puppies Available Now!</h1>
+
+  {% if puppies %}
+    {% for p in puppies %}
+      <section class="puppy-block">
+        <p class="puppy-line">
+          <strong>{{ p.name }}</strong> (Name)
+          {% if p.age_in_months is not None %}
+            &nbsp;–&nbsp; {{ p.age_in_months }} months (Age based on birthday)
+          {% endif %}
+          {% if p.color or p.get_sex_display %}
+            &nbsp;–&nbsp; {{ p.color }} {{ p.get_sex_display }} (Color and Sex)
+          {% endif %}
+          {% if p.dam or p.sire %}
+            &nbsp;–&nbsp;
+            {% if p.dam %}{{ p.dam.name }}{% endif %}
+            {% if p.sire %} x {{ p.sire.name }}{% endif %}
+            (Dam and Sire)
+          {% endif %}
+        </p>
+
+        <p class="puppy-desc-label"><strong>Description:</strong></p>
+        {% if p.description %}
+          <p class="puppy-desc">{{ p.description }}</p>
+        {% else %}
+          <p class="puppy-desc">&nbsp;</p>
+        {% endif %}
+
+        <div class="puppy-photos">
+          {% if p.photo_1 %}<img src="{{ p.photo_1.url }}" alt="{{ p.name }} photo 1">{% endif %}
+          {% if p.photo_2 %}<img src="{{ p.photo_2.url }}" alt="{{ p.name }} photo 2">{% endif %}
+          {% if p.photo_3 %}<img src="{{ p.photo_3.url }}" alt="{{ p.name }} photo 3">{% endif %}
+          {% if p.photo_4 %}<img src="{{ p.photo_4.url }}" alt="{{ p.name }} photo 4">{% endif %}
+        </div>
+      </section>
+    {% endfor %}
+  {% else %}
+    <p class="no-puppies">No puppies available right now.</p>
+  {% endif %}
+</div>
+
+<style>
+  .puppies-box {
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid #bfbfbf;
+    background: #fff;
+    padding: 0 0 40px 0;
+  }
+
+  .puppies-logo {
+    display: block;
+    max-width: 340px;
+    height: auto;
+    margin: 20px 0 10px 70px;  /* same left margin as About pages */
+  }
+
+  .puppies-heading {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0 0 30px 0;
+  }
+
+  .puppy-block {
+    margin: 0 70px 40px 70px;
+  }
+
+  .puppy-line {
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+  }
+
+  .puppy-desc-label {
+    margin: 10px 0 4px 0;
+  }
+
+  .puppy-desc {
+    margin: 0 0 14px 0;
+    line-height: 1.4;
+    max-width: 90%;
+  }
+
+  .puppy-photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  .puppy-photos img {
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+  }
+
+  .no-puppies {
+    margin: 0 70px;
+    padding-bottom: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .puppies-box {
+      border-left: 0;
+      border-right: 0;
+    }
+    .puppies-logo {
+      margin: 20px auto 10px auto;
+    }
+    .puppy-block {
+      margin: 0 20px 30px 20px;
+    }
+    .puppy-desc {
+      max-width: 100%;
+    }
+    .puppy-photos {
+      justify-content: center;
+    }
+  }
+</style>
+{% endblock %}
+
+
+
+{% comment %} {% extends "website/base.html" %}
 {% block title %}Available Puppies • Callen Kennels{% endblock %}
 {% block content %}
 <h1>Available Puppies</h1>
@@ -20,4 +152,4 @@
 {% else %}
   <p>No puppies available right now. Check back soon!</p>
 {% endif %}
-{% endblock %}
+{% endblock %} {% endcomment %}
