@@ -125,3 +125,15 @@ class AboutBreedPageAdmin(admin.ModelAdmin):
         if models.AboutBreedPage.objects.exists():
             return False
         return super().has_add_permission(request)
+    
+
+@admin.register(models.PuppiesPage)
+class PuppiesPageAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "updated_at")
+    fields = ("title", "heading", "header_image")
+
+    def has_add_permission(self, request):
+        # only one settings row
+        if models.PuppiesPage.objects.exists():
+            return False
+        return super().has_add_permission(request)
