@@ -422,3 +422,30 @@ class BoysPage(models.Model):
 
     def __str__(self):
         return "My Boys Page"
+
+
+class PastLittersPage(models.Model):
+    title = models.CharField(
+        max_length=150,
+        default="Past Litters • Callen Kennels",
+        help_text="Browser tab title."
+    )
+    heading = models.CharField(
+        max_length=150,
+        default="Past Litters",
+        help_text="Big heading shown at the top of the Past Litters page."
+    )
+    header_image = models.ImageField(
+        upload_to="litters/header/",
+        blank=True,
+        null=True,
+        help_text="Image shown at top-left under the nav."
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Past Litters Page"
+        verbose_name_plural = "Past Litters Page"
+
+    def __str__(self):
+        return "Past Litters Page"

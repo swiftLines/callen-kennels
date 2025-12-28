@@ -170,3 +170,13 @@ class BoysPageAdmin(admin.ModelAdmin):
             return False
         return super().has_add_permission(request)
     
+
+@admin.register(models.PastLittersPage)
+class PastLittersPageAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "updated_at")
+    fields = ("title", "heading", "header_image")
+
+    def has_add_permission(self, request):
+        if models.PastLittersPage.objects.exists():
+            return False
+        return super().has_add_permission(request)

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 from django.utils import timezone
-from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage, PuppiesPage, SuppliesPage,GirlsPage, BoysPage
+from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage, PuppiesPage, SuppliesPage,GirlsPage, BoysPage, PastLittersPage
 
 
 class HomeView(TemplateView):
@@ -84,6 +84,11 @@ class LitterPastListView(ListView):
     template_name = "website/litters_past.html"
     context_object_name = "litters"
     queryset = Litter.objects.filter(status=Litter.PAST).select_related("dam", "sire").order_by("-whelp_date", "-created_at")
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["past_litters_page"] = PastLittersPage.objects.first()
+        return ctx
 
 
 # Gallery
