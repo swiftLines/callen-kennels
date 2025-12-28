@@ -395,3 +395,30 @@ class GirlsPage(models.Model):
 
     def __str__(self):
         return "My Girls Page"
+
+
+class BoysPage(models.Model):
+    title = models.CharField(
+        max_length=150,
+        default="My Boys • Callen Kennels",
+        help_text="Browser tab title."
+    )
+    heading = models.CharField(
+        max_length=150,
+        default="My Boys",
+        help_text="Big heading shown at the top of the My Boys page."
+    )
+    header_image = models.ImageField(
+        upload_to="dogs/header/",
+        blank=True,
+        null=True,
+        help_text="Image shown at top-left under the nav."
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "My Boys Page"
+        verbose_name_plural = "My Boys Page"
+
+    def __str__(self):
+        return "My Boys Page"
