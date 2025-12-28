@@ -342,3 +342,29 @@ class PuppiesPage(models.Model):
     def __str__(self):
         return "Puppies Available Page"
 
+
+class SuppliesPage(models.Model):
+    title = models.CharField(
+        max_length=150,
+        default="Ruff House Dog Supplies LLC • Supplies",
+        help_text="Browser tab title."
+    )
+    heading = models.CharField(
+        max_length=150,
+        default="Ruff House Dog Supplies LLC",
+        help_text="Big heading shown at the top of the supplies page."
+    )
+    header_image = models.ImageField(
+        upload_to="ruffhouse/header/",
+        blank=True,
+        null=True,
+        help_text="Image shown at top-left under the nav."
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Ruff House Supplies Page"
+        verbose_name_plural = "Ruff House Supplies Page"
+
+    def __str__(self):
+        return "Ruff House Supplies Page"

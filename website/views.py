@@ -131,7 +131,7 @@ class PuppyAvailableListView(ListView):
     context_object_name = "puppies"
 
     def get_queryset(self):
-        return Puppy.objects.filter(is_available=True).order_by("name")
+        return Puppy.objects.filter(status=Puppy.AVAILABLE).order_by("name")
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
