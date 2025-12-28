@@ -159,3 +159,14 @@ class GirlsPageAdmin(admin.ModelAdmin):
         if models.GirlsPage.objects.exists():
             return False
         return super().has_add_permission(request)
+
+@admin.register(models.BoysPage)
+class BoysPageAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "updated_at")
+    fields = ("title", "heading", "header_image")
+
+    def has_add_permission(self, request):
+        if models.BoysPage.objects.exists():
+            return False
+        return super().has_add_permission(request)
+    
