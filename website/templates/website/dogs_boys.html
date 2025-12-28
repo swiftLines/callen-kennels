@@ -1,13 +1,67 @@
 {% extends "website/base.html" %}
+{% block title %}
+  {{ boys_page.title|default:"My Boys • Callen Kennels" }}
+{% endblock %}
 {% block content %}
-  <h1>My Boys</h1>
-  <ul>
-    {% for d in dogs %}
-      <li>
-        {% if d.photo %}<img src="{{ d.photo.url }}" alt="" style="max-height:140px">{% endif %}
-        <a href="{% url 'dog_detail' slug=d.slug %}"><strong>{{ d.name }}</strong></a> — {{ d.color }}
-        {% if d.retired %}<span style="opacity:.8; font-size:.9em;">(Retired)</span>{% endif %}
-      </li>
-    {% empty %}<li>No dogs yet.</li>{% endfor %}
-  </ul>
+  <div class="page-box">
+    <div class="page-top">
+      {% if boys_page and boys_page.header_image %}
+        <img src="{{ boys_page.header_image.url }}" alt="Callen Kennels" class="page-logo">
+      {% endif %}
+
+      <h1 class="page-heading">
+        {{ boys_page.heading|default:"My Boys" }}
+      </h1>
+    </div>
+    <h1>My Boys</h1>
+    <ul>
+      {% for d in dogs %}
+        <li>
+          {% if d.photo %}<img src="{{ d.photo.url }}" alt="" style="max-height:140px">{% endif %}
+          <a href="{% url 'dog_detail' slug=d.slug %}"><strong>{{ d.name }}</strong></a> — {{ d.color }}
+          {% if d.retired %}<span style="opacity:.8; font-size:.9em;">(Retired)</span>{% endif %}
+        </li>
+      {% empty %}<li>No dogs yet.</li>{% endfor %}
+    </ul>
+  </div>
+
+  <style>
+    .page-box {
+      max-width: 1000px;
+      margin: 0 auto;
+      border: 1px solid #bfbfbf;
+      background: #fff;
+      padding: 0 0 40px 0;
+    }
+
+    .page-top {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      align-items: center;
+      gap: 30px;
+      padding: 25px 70px 10px 70px;
+    }
+
+    .page-logo {
+      width: 240px;
+      height: auto;
+    }
+
+    .page-heading {
+      text-align: center;
+      font-size: 2rem;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    @media (max-width: 900px) {
+      .page-box { border-left: 0; border-right: 0; }
+      .page-top {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        justify-items: center;
+      }
+      .page-heading { font-size: 1.6rem; }
+    }
+  </style>
 {% endblock %}
