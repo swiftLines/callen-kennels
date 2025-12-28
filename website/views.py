@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 from django.utils import timezone
-from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage, PuppiesPage, SuppliesPage
+from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage, PuppiesPage, SuppliesPage,GirlsPage
 
 
 class HomeView(TemplateView):
@@ -39,6 +39,11 @@ class GirlsListView(ListView):
     context_object_name = "dogs"
     queryset = Dog.objects.filter(sex=Dog.FEMALE).order_by("name")
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["girls_page"] = GirlsPage.objects.first()
+        return ctx
+    
 
 class BoysListView(ListView):
     model = Dog
