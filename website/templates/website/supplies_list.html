@@ -1,23 +1,79 @@
 {% extends "website/base.html" %}
-{% block title %}Supplies • Ruff House{% endblock %}
+{% block title %}
+  {{ supplies_page.title|default:"Ruff House Dog Supplies LLC • Supplies" }}
+{% endblock %}
 {% block content %}
-<h1>Supplies</h1>
+<div class="supplies-box">
+  <div class="supplies-top">
+      {% if supplies_page and supplies_page.header_image %}
+        <img src="{{ supplies_page.header_image.url }}" alt="Ruff House" class="supplies-logo">
+      {% endif %}
 
-{% if items %}
-  <ul>
-    {% for item in items %}
-      <li style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem;">
-        {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.name }}" style="max-height:100px">{% endif %}
-        <div>
-          <a href="{% url 'supply_detail' slug=item.slug %}"><strong>{{ item.name }}</strong></a>
-          {% if item.category %}<div><small>{{ item.category }}</small></div>{% endif %}
-          {% if item.price %}<div>Price: ${{ item.price|floatformat:2 }}</div>{% endif %}
-          <div>Status: {% if item.in_stock %}In stock{% else %}Out of stock{% endif %}</div>
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>No items listed yet.</p>
-{% endif %}
+      <h1 class="supplies-heading">
+        {{ supplies_page.heading|default:"Ruff House Dog Supplies LLC" }}
+      </h1>
+    </div>
+  {% if items %}
+    <ul>
+      {% for item in items %}
+        <li style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem;">
+          {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.name }}" style="max-height:100px">{% endif %}
+          <div>
+            <a href="{% url 'supply_detail' slug=item.slug %}"><strong>{{ item.name }}</strong></a>
+            {% if item.category %}<div><small>{{ item.category }}</small></div>{% endif %}
+            {% if item.price %}<div>Price: ${{ item.price|floatformat:2 }}</div>{% endif %}
+            <div>Status: {% if item.in_stock %}In stock{% else %}Out of stock{% endif %}</div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No items listed yet.</p>
+  {% endif %}
+</div>
+
+<style>
+.supplies-box {
+  max-width: 1000px;
+  margin: 0 auto;
+  border: 1px solid #bfbfbf;
+  background: #fff;
+  padding: 0 0 40px 0;
+}
+
+.supplies-top {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  align-items: center;
+  gap: 30px;
+  padding: 25px 70px 10px 70px;
+}
+
+.supplies-logo {
+  width: 240px;
+  height: auto;
+}
+
+.supplies-heading {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1.1;
+}
+
+@media (max-width: 900px) {
+  .supplies-box {
+    border-left: 0;
+    border-right: 0;
+  }
+  .supplies-top {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    justify-items: center;
+  }
+  .supplies-heading {
+    font-size: 1.6rem;
+  }
+}
+</style>  
 {% endblock %}
