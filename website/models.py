@@ -368,3 +368,30 @@ class SuppliesPage(models.Model):
 
     def __str__(self):
         return "Ruff House Supplies Page"
+
+
+class GirlsPage(models.Model):
+    title = models.CharField(
+        max_length=150,
+        default="My Girls • Callen Kennels",
+        help_text="Browser tab title."
+    )
+    heading = models.CharField(
+        max_length=150,
+        default="My Girls",
+        help_text="Big heading shown at the top of the My Girls page."
+    )
+    header_image = models.ImageField(
+        upload_to="dogs/header/",
+        blank=True,
+        null=True,
+        help_text="Image shown at top-left under the nav."
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "My Girls Page"
+        verbose_name_plural = "My Girls Page"
+
+    def __str__(self):
+        return "My Girls Page"
