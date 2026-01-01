@@ -180,3 +180,18 @@ class PastLittersPageAdmin(admin.ModelAdmin):
         if models.PastLittersPage.objects.exists():
             return False
         return super().has_add_permission(request)
+
+
+@admin.register(models.PastPuppy)
+class PastPuppyAdmin(admin.ModelAdmin):
+    list_display = ("name", "litter_name", "birth_date", "is_published")
+    list_filter = ("is_published",)
+    search_fields = ("name", "litter_name")
+    fields = (
+        "name",
+        "litter_name",
+        "birth_date",
+        "puppy_photo",
+        "adult_photo",
+        "is_published",
+    )

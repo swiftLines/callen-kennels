@@ -450,7 +450,6 @@ class PastLittersPage(models.Model):
     def __str__(self):
         return "Past Litters Page"
     
-    from django.db import models
 
 # If you already have TimeStampedModel, keep using it.
 # Otherwise, you can replace TimeStampedModel with models.Model.
