@@ -449,3 +449,40 @@ class PastLittersPage(models.Model):
 
     def __str__(self):
         return "Past Litters Page"
+    
+    from django.db import models
+
+# If you already have TimeStampedModel, keep using it.
+# Otherwise, you can replace TimeStampedModel with models.Model.
+class PastPuppy(models.Model):
+    name = models.CharField(max_length=120)
+
+    # simple text so admin doesn't need to link to actual Litter objects
+    litter_name = models.CharField(
+        max_length=120,
+        blank=True,
+        help_text='Example: "Salem x Dunkin" or "Litter A"'
+    )
+
+    birth_date = models.DateField(blank=True, null=True)
+
+    puppy_photo = models.ImageField(
+        upload_to="past_puppies/puppy/",
+        blank=True,
+        null=True
+    )
+    adult_photo = models.ImageField(
+        upload_to="past_puppies/adult/",
+        blank=True,
+        null=True
+    )
+
+    is_published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["-birth_date", "name"]
+        verbose_name = "Past Puppy"
+        verbose_name_plural = "Past Puppies"
+
+    def __str__(self):
+        return self.name

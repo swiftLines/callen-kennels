@@ -27,7 +27,7 @@ class DogAdmin(admin.ModelAdmin):
 class PuppyInline(admin.TabularInline):
     model = models.Puppy
     extra = 0
-    fields = ("name", "sex", "color", "price", "status", "main_photo")
+    fields = ("name", "sex", "color", "price", "status", "photo_1")
     show_change_link = True
 
 
