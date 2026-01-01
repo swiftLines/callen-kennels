@@ -1,7 +1,9 @@
 {% extends "website/base.html" %}
+
 {% block title %}
   {{ past_litters_page.title|default:"Past Litters • Callen Kennels" }}
 {% endblock %}
+
 {% block content %}
 <div class="page-box">
   <div class="page-top">
@@ -14,34 +16,50 @@
     </h1>
   </div>
 
-  {% if litters %}
-    <ul>
-      {% for l in litters %}
-        <li style="margin-bottom:1rem;">
-          <div>
-            <strong>{{ l.dam.name }}</strong> × <strong>{{ l.sire.name }}</strong>
-            {% if l.whelp_date %} — Whelped: {{ l.whelp_date|date:"M j, Y" }}{% endif %}
-          </div>
-          {% if l.puppies.all %}
-            <div>
-              Puppies:
-              {% for p in l.puppies.all %}
-                <span>{{ p.name|default:"Puppy" }} ({{ p.get_sex_display|default:"" }} {{ p.color }}){% if not forloop.last %}, {% endif %}</span>
-              {% empty %}
-                <span>—</span>
-              {% endfor %}
+  {% if past_puppies %}
+    <div class="past-grid">
+      {% for p in past_puppies %}
+        <div class="past-card">
+          <div class="past-meta">
+            <div class="past-name"><strong>{{ p.name }}</strong></div>
+
+            <div class="past-sub">
+              {% if p.litter_name %}
+                <div><strong>Litter:</strong> {{ p.litter_name }}</div>
+              {% endif %}
+              {% if p.birth_date %}
+                <div><strong>Birthday:</strong> {{ p.birth_date }}</div>
+              {% endif %}
             </div>
-          {% endif %}
-          {% if l.notes %}<div><small>{{ l.notes }}</small></div>{% endif %}
-        </li>
+          </div>
+
+          <div class="past-photos">
+            <div class="past-photo">
+              {% if p.puppy_photo %}
+                <img src="{{ p.puppy_photo.url }}" alt="{{ p.name }} puppy photo">
+              {% else %}
+                <div class="photo-placeholder">Puppy Photo</div>
+              {% endif %}
+            </div>
+
+            <div class="past-photo">
+              {% if p.adult_photo %}
+                <img src="{{ p.adult_photo.url }}" alt="{{ p.name }} adult photo">
+              {% else %}
+                <div class="photo-placeholder">Adult Photo</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
-    <p>No past litters recorded yet.</p>
+    <p class="empty-msg">No past puppies have been added yet.</p>
   {% endif %}
 </div>
 
 <style>
+  /* your standard framed page */
   .page-box {
     max-width: 1000px;
     margin: 0 auto;
@@ -70,14 +88,77 @@
     line-height: 1.1;
   }
 
+  /* 2 centered columns down the page */
+  .past-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 70px;          /* more space between columns */
+    width: 78%;
+    max-width: 880px;
+    margin: 30px auto 0 auto;
+  }
+
+  .past-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .past-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.95rem;
+  }
+
+  .past-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .past-photos img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    background: #f8f8f8;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #666;
+    background: #f8f8f8;
+    font-size: 0.9rem;
+  }
+
+  .empty-msg {
+    margin: 30px 70px 0 70px;
+  }
+
   @media (max-width: 900px) {
     .page-box { border-left: 0; border-right: 0; }
+
     .page-top {
       grid-template-columns: 1fr;
       padding: 20px;
       justify-items: center;
     }
+
     .page-heading { font-size: 1.6rem; }
+
+    /* mobile: 1 column */
+    .past-grid {
+      grid-template-columns: 1fr;
+      width: auto;
+      max-width: 520px;
+      margin: 20px 20px 0 20px;
+      gap: 30px;
+    }
   }
 </style>
 {% endblock %}
