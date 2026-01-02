@@ -15,13 +15,21 @@
     </div>
     
     <ul>
-      {% for d in dogs %}
+      {% if dogs %}
+        {% for d in dogs %}
+          {% include "website/_dog_detail_block.html" with dog=d %}
+        {% endfor %}
+      {% else %}
+        <p style="margin: 20px 70px;">No dogs yet.</p>
+      {% endif %}
+      {% comment %} {% for d in dogs %}
+        {% include "website/_dog_detail_block.html" with dog=dog %}
         <li>
           {% if d.photo %}<img src="{{ d.photo.url }}" alt="" style="max-height:140px">{% endif %}
           <a href="{% url 'dog_detail' slug=d.slug %}"><strong>{{ d.name }}</strong></a> — {{ d.color }}
           {% if d.retired %}<span style="opacity:.8; font-size:.9em;">(Retired)</span>{% endif %}
         </li>
-      {% empty %}<li>No dogs yet.</li>{% endfor %}
+      {% empty %}<li>No dogs yet.</li>{% endfor %} {% endcomment %}
     </ul>
   </div>
 
@@ -63,5 +71,45 @@
       }
       .page-heading { font-size: 1.6rem; }
     }
+
+    /* new format */
+  .dog-card {
+  margin: 30px 70px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #ddd;
+}
+
+.dog-name {
+  margin: 0 0 10px 0;
+  font-size: 1.4rem;
+}
+
+.dog-photo {
+  display: block;
+  max-height: 240px;
+  width: auto;
+  margin: 0 0 10px 0;
+  border: 1px solid #ccc;
+}
+
+.dog-meta {
+  margin: 0 0 10px 0;
+}
+
+.dog-bio {
+  margin: 0;
+  max-width: 800px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .dog-card {
+    margin: 20px;
+  }
+  .dog-photo {
+    width: 100%;
+    max-height: none;
+  }
+}
   </style>
 {% endblock %}

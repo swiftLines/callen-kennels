@@ -82,7 +82,7 @@ class LitterUpcomingListView(ListView):
 class LitterPastListView(ListView):
     model = PastPuppy
     template_name = "website/litters_past.html"
-    context_object_name = "litters"
+    context_object_name = "past_puppies"
 
     def get_queryset(self):
         return PastPuppy.objects.filter(is_published=True).order_by("-birth_date", "name")

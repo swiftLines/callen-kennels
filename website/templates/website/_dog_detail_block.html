@@ -1,0 +1,16 @@
+<div class="dog-card">
+  <h2 class="dog-name">{{ dog.name }}</h2>
+
+  {% if dog.photo %}
+    <img src="{{ dog.photo.url }}" alt="{{ dog.name }}" class="dog-photo">
+  {% endif %}
+
+  <p class="dog-meta">
+    Sex: {{ dog.get_sex_display }}
+    {% if dog.dob %} • DOB: {{ dog.dob|date:"M j, Y" }}{% endif %}
+  </p>
+
+  {% if dog.bio %}
+    <p class="dog-bio">{{ dog.bio }}</p>
+  {% endif %}
+</div>

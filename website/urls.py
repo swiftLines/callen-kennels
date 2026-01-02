@@ -17,7 +17,7 @@ urlpatterns = [
     # Dogs
     path("dogs/girls/", views.GirlsListView.as_view(), name="dogs_girls"),
     path("dogs/boys/", views.BoysListView.as_view(), name="dogs_boys"),
-    path("dogs/<slug:slug>/", views.DogDetailView.as_view(), name="dog_detail"),
+    # path("dogs/<slug:slug>/", views.DogDetailView.as_view(), name="dog_detail"),
 
     # Gallery
     path("gallery/grown/", views.GrownGalleryListView.as_view(), name="gallery_grown"),
