@@ -14,7 +14,12 @@
       </h1>
     </div>
   {% if items %}
-    <ul>
+    {% for item in items %}
+      {% include "website/_supply_detail_block.html" with item=item %}
+    {% endfor %}
+  {% else %}
+    <p style="margin: 20px 70px;">No items listed yet.</p>
+    {% comment %} <ul>
       {% for item in items %}
         <li style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem;">
           {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.name }}" style="max-height:100px">{% endif %}
@@ -28,7 +33,7 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p>No items listed yet.</p>
+    <p>No items listed yet.</p> {% endcomment %}
   {% endif %}
 </div>
 
@@ -75,5 +80,46 @@
     font-size: 1.6rem;
   }
 }
+
+  .supply-card {
+    margin: 30px 70px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .supply-name {
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .supply-image {
+    display: block;
+    max-height: 240px;
+    width: auto;
+    margin: 0 0 10px 0;
+    border: 1px solid #ccc;
+  }
+
+  .supply-price {
+    margin: 0 0 10px 0;
+  }
+
+  .supply-description {
+    white-space: pre-wrap;
+    max-width: 850px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .supply-card { margin: 20px; }
+    .supply-image { width: 100%; max-height: none; }
+  }
+
+  .supply-desc-title {
+  margin: 18px 0 8px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  }
 </style>  
 {% endblock %}

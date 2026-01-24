@@ -1,0 +1,35 @@
+<article class="supply-card">
+  <h2 class="supply-name">{{ item.name }}</h2>
+
+  {% if item.image %}
+    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="supply-image">
+  {% endif %}
+
+  {% if item.category %}<p><strong>Category:</strong> {{ item.category }}</p>{% endif %}
+  {% if item.price %}<p><strong>Price:</strong> ${{ item.price|floatformat:2 }}</p>{% endif %}
+  <p><strong>Status:</strong> {% if item.in_stock %}In stock{% else %}Out of stock{% endif %}</p>
+
+  {% if item.description %}
+    <h3 class="supply-desc-title">Description</h3>
+    <div class="supply-description">{{ item.description }}</div>
+  {% endif %}
+
+  <hr>
+  <p class="supply-inquire"><em>To inquire or order:</em> please use the Contact page.</p>
+</article>
+
+{% comment %} <div class="supply-card">
+  <h2 class="supply-name">{{ item.name }}</h2>
+
+  {% if item.image %}
+    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="supply-image">
+  {% endif %}
+
+  {% if item.price %}
+    <p class="supply-price"><strong>Price:</strong> ${{ item.price }}</p>
+  {% endif %}
+
+  {% if item.description %}
+    <p class="supply-description">{{ item.description }}</p>
+  {% endif %}
+</div> {% endcomment %}

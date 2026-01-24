@@ -23,9 +23,9 @@ urlpatterns = [
     path("gallery/grown/", views.GrownGalleryListView.as_view(), name="gallery_grown"),
 
     # Events
-    path("ruff-house/venues/", views.EventListView.as_view(), name="events_list"),
+    # path("ruff-house/venues/", views.EventListView.as_view(), name="events_list"),
 
     # Supplies (catalog)
     path("ruff-house/supplies/", views.SupplyListView.as_view(), name="supplies_list"),
-    path("ruff-house/supplies/<slug:slug>/", views.SupplyDetailView.as_view(), name="supply_detail"),
+    # path("ruff-house/supplies/<slug:slug>/", views.SupplyDetailView.as_view(), name="supply_detail"),
 ]

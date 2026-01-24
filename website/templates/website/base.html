@@ -7,41 +7,52 @@
   <link href="https://unpkg.com/mvp.css" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="{% url 'home' %}">Home</a>
+  <header class="site-header">
+  <div class="top-accent"></div>
 
-      <details>
-        <summary>About</summary>
-        <a href="{% url 'about' %}">About Callen Kennels</a>
-        <a href="{% url 'about_breed' %}">About The Breed</a>
-        <!-- <a href="{% url 'page_detail' slug='contact' %}">Contact</a> -->
-      </details>
+  <nav class="site-nav">
+    <a class="nav-link" href="{% url 'home' %}">Home</a>
 
-      <details>
-        <summary>Puppies</summary>
+    <div class="nav-dropdown">
+      <button class="nav-dropbtn" type="button">
+        About Callen Kennels <span class="chev">▾</span>
+      </button>
+      <div class="nav-dropdown-menu">
+        <a href="{% url 'about' %}">Callen Kennels</a>
+        <a href="{% url 'about_breed' %}">The Breed</a>
+      </div>
+    </div>
+
+    <div class="nav-dropdown">
+      <button class="nav-dropbtn" type="button">
+        Puppies <span class="chev">▾</span>
+      </button>
+      <div class="nav-dropdown-menu">
         <a href="{% url 'puppies_available' %}">Available Now</a>
-        <a href="{% url 'litters_past' %}">Past Litters</a>
-        <!-- <a href="{% url 'litters_upcoming' %}">Upcoming Litters</a>
-        <a href="{% url 'gallery_grown' %}">Grown Pics</a>
-        <a href="{% url 'page_detail' slug='puppy-health-contract' %}">Puppy Health &amp; Contract</a> -->
-      </details>
+        <a href="{% url 'litters_past' %}">Past Puppies</a>
+      </div>
+    </div>
 
-      <details>
-        <summary>My Dogs</summary>
+    <div class="nav-dropdown">
+      <button class="nav-dropbtn" type="button">
+        My Dogs <span class="chev">▾</span>
+      </button>
+      <div class="nav-dropdown-menu">
         <a href="{% url 'dogs_girls' %}">My Girls</a>
         <a href="{% url 'dogs_boys' %}">My Boys</a>
-      </details>
+      </div>
+    </div>
 
-      <details>
-        <summary>Ruff House</summary>
-        <!-- <a href="{% url 'page_detail' slug='ruff-house-about' %}">About</a>
-        <a href="{% url 'events_list' %}">Upcoming Venues</a>
-        <a href="{% url 'page_detail' slug='ruff-house-contact' %}">Contact</a> -->
+    <div class="nav-dropdown">
+      <button class="nav-dropbtn" type="button">
+        Ruff House Dog Supplies <span class="chev">▾</span>
+      </button>
+      <div class="nav-dropdown-menu">
         <a href="{% url 'supplies_list' %}">Supplies</a>
-      </details>
-    </nav>
-  </header>
+      </div>
+    </div>
+  </nav>
+</header>
 
   <main>
     {% block content %}{% endblock %}
