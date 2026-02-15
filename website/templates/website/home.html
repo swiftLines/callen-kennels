@@ -2,95 +2,220 @@
 {% block title %}Home • Callen Kennels{% endblock %}
 
 {% block content %}
-<div class="home-wrapper">
-  <h1>{{ home.heading|default:"Welcome to Callen Kennels & Ruff House Dog Supplies LLC!" }}</h1>
+<div class="container home-page">
+  <h1 class="home-heading">
+    {{ home.heading|default:"Welcome to Callen Kennels & Ruff House Dog Supplies LLC!" }}
+  </h1>
 
-  <div class="home-grid">
-    <!-- Left -->
-    <div class="home-section">
+  {# ✅ NEW: subtitle under heading #}
+  {% if home and home.subheading %}
+    <p class="home-subheading">{{ home.subheading }}</p>
+  {% else %}
+    <p class="home-subheading">
+      Callen Kennels, proudly established since 2009, is now partnered with Ruff House Dog Supplies
+    </p>
+  {% endif %}
+
+  {# Top two large images (placeholders in mock) #}
+  <div class="home-logos">
+    <div class="home-logo-wrap">
       {% if home and home.left_image %}
-        <img src="{{ home.left_image.url }}" alt="{{ home.left_title }}" class="home-image">
+        <img src="{{ home.left_image.url }}" alt="{{ home.left_title|default:'Callen Kennels' }}" class="home-logo">
+      {% else %}
+        <div class="home-img-placeholder">Placeholder for Image that can be changed</div>
       {% endif %}
-      <h3>{{ home.left_title|default:"Callen Kennels" }}</h3>
-      <p>{{ home.left_blurb|default:"Breeding Miniature American Shepherds since XX..." }}</p>
-      <p class="btn-row">
-        <a class="btn" href="{{ home.left_link|default:'/page/about/' }}">
-          {{ home.left_button_label|default:"Learn More" }}
-        </a>
-      </p>
     </div>
 
-    <!-- Right -->
-    <div class="home-section">
+    <div class="home-logo-wrap">
       {% if home and home.right_image %}
-        <img src="{{ home.right_image.url }}" alt="{{ home.right_title }}" class="home-image">
+        <img src="{{ home.right_image.url }}" alt="{{ home.right_title|default:'Ruff House Dog Supplies LLC' }}" class="home-logo">
+      {% else %}
+        <div class="home-img-placeholder">Placeholder for Image that can be changed</div>
       {% endif %}
-      <h3>{{ home.right_title|default:"Ruff House Dog Supplies LLC" }}</h3>
-      <p>{{ home.right_blurb|default:"USA-made dog supplies available at venues/events..." }}</p>
-      <p class="btn-row">
-        <a class="btn" href="{{ home.right_link|default:'/ruff-house/supplies/' }}">
-          {{ home.right_button_label|default:"View Supplies" }}
-        </a>
-      </p>
     </div>
   </div>
 
-  <div class="contact-block">
-    <h4>{{ home.contact_heading|default:"Contact Information" }}</h4>
-    <p>
-      {{ home.contact_name|default:"Sue Callen" }}<br>
-      {{ home.contact_phone|default:"518-XXX-XXXX" }}<br>
-      {% if home.contact_email %}<a href="mailto:{% firstof home.contact_email '' %}">{{ home.contact_email }}</a><br>{% endif %}
-      {{ home.contact_address|default:"Rensselaerville, NY" }}
-    </p>
+  {# Two text columns + buttons #}
+  <div class="home-columns">
+    <div class="home-col">
+
+      {# ✅ NEW: small logo + title in one row #}
+      <div class="home-title-row">
+        {% if home and home.left_small_logo %}
+          <img class="home-small-logo" src="{{ home.left_small_logo.url }}" alt="" aria-hidden="true">
+        {% else %}
+          <div class="home-small-logo home-small-logo--ph">Logo</div>
+        {% endif %}
+        <h3 class="home-title">{{ home.left_title|default:"Callen Kennels" }}</h3>
+      </div>
+
+      <p class="home-blurb">
+        {{ home.left_blurb|default:"Breeding AKC Miniature American Shepherds since 2009, Callen Kennels is located in the small town of Rensselaerville, NY about 45 mins west of Albany." }}
+      </p>
+
+      <div class="btn-row">
+        <a class="btn" href="{{ home.left_link|default:'#' }}">
+          {{ home.left_button_label|default:"Available Puppies" }}
+        </a>
+      </div>
+    </div>
+
+    <div class="home-col">
+      <div class="home-title-row">
+        {% if home and home.right_small_logo %}
+          <img class="home-small-logo" src="{{ home.right_small_logo.url }}" alt="" aria-hidden="true">
+        {% else %}
+          <div class="home-small-logo home-small-logo--ph">Logo</div>
+        {% endif %}
+        <h3 class="home-title">{{ home.right_title|default:"Ruff House Dog Supplies" }}</h3>
+      </div>
+
+      <p class="home-blurb">
+        {{ home.right_blurb|default:"USA-made dog supplies available at venues/events across the capital region. Check out upcoming locations on the Ruff House specific page." }}
+      </p>
+
+      <div class="btn-row">
+        <a class="btn" href="{{ home.right_link|default:'#' }}">
+          {{ home.right_button_label|default:"Shop Ruff House Dog Supplies" }}
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
 <style>
-  .home-wrapper {
-    border: 1px solid #ccc; background:#fff;
-    padding: 1.5rem 1rem 2rem; text-align:center;
-    max-width: 1000px; margin: 0 auto;
+  .home-page{
+    padding-top: 26px;
   }
-  .home-wrapper h1 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; }
-  .home-grid { display:grid; grid-template-columns: 1fr 1fr; gap:2rem; align-items:start; margin-bottom:2rem; }
-  .home-section { display:flex; flex-direction:column; align-items:center; width: 100%; max-width: 420px;}
-  .home-image { max-height: 230px; width:auto; margin-bottom:1rem; }
-  .home-section h3,
-  .home-section p {
-    text-align: left;
-    width: 85%;               /* give them a consistent text column */
-    max-width: 380px;
-  }
-  .home-section h3 { font-weight:700; text-decoration:underline; margin: 0.4rem 0 0.35rem;}
-  .contact-block { text-align:center; line-height:1.6; font-size:.9rem; border-top:1px solid #ddd; padding-top:1rem; }
-  @media (max-width: 768px) { .home-grid { grid-template-columns: 1fr; } }
-  /* Buttons: solid black, white text, centered, consistent width */
-.btn-row {
-  width: 100%;
-  display: flex;
-  justify-content: center;   /* centers the button itself */
-  margin-top: 1rem;
-}
 
-.btn {
-  display: inline-flex;       /* allows centering text inside */
-  justify-content: center;
-  align-items: center;
-  min-width: 170px;
-  padding: 0.6rem 1rem;
-  background-color: #000;
-  color: #fff;
-  border: 1px solid #000;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-.btn:hover { background: #000; border-color: #000; color: #fff; }
-.btn:active { transform: translateY(1px); }
+  .home-heading{
+    text-align: center;
+    font-size: 1.85rem;
+    margin: 0 0 6px 0;
+    font-weight: 800;
+  }
+
+  /* ✅ NEW subtitle line */
+  .home-subheading{
+    text-align: center;
+    margin: 0 0 22px 0;
+    font-size: 0.98rem;
+    opacity: 0.85;
+  }
+
+  /* Top placeholder/images */
+  .home-logos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;              /* closer like mock */
+    justify-items: center;
+    align-items: center;
+    margin: 0 0 22px 0;
+  }
+
+  .home-logo-wrap{
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .home-logo{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Placeholder boxes like the mock */
+  .home-img-placeholder{
+    width: 100%;
+    height: 220px;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    opacity: 0.85;
+    background: transparent;
+  }
+
+  /* Text columns */
+  .home-columns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;            /* mock spacing */
+    align-items: start;
+    margin-top: 6px;
+  }
+
+  .home-col{
+    max-width: 520px;
+    justify-self: center;
+    text-align: left;
+  }
+
+  /* ✅ NEW title row with small logo */
+  .home-title-row{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 8px 0;
+  }
+
+  .home-small-logo{
+    width: 64px;
+    height: 46px;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Placeholder "Logo" box like mock */
+  .home-small-logo--ph{
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    opacity: 0.85;
+  }
+
+  .home-title{
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .home-blurb{
+    margin: 0;
+    line-height: 1.55;
+    font-size: 0.98rem;
+  }
+
+  .btn-row{
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+  }
+
+  .btn{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 240px;        /* wider like mock */
+    padding: 12px 18px;
+    background: #5b0a0a;
+    color: #fff;
+    border: 0;
+    border-radius: 2px;      /* squarer like mock */
+    text-decoration: none;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+  .btn:hover{ background: #3e0707; }
+
+  @media (max-width: 900px){
+    .home-logos{ grid-template-columns: 1fr; }
+    .home-columns{ grid-template-columns: 1fr; gap: 28px; }
+    .home-img-placeholder{ height: 200px; }
+  }
 </style>
 {% endblock %}

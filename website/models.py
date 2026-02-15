@@ -229,8 +229,10 @@ class SupplyItem(TimeStampedModel):
 class Homepage(models.Model):
     # Top heading
     heading = models.CharField(max_length=200, default="Welcome to Callen Kennels & Ruff House Dog Supplies LLC!")
+    subheading = models.CharField(max_length=255, blank=True)
 
     # Left block (Callen Kennels)
+    left_small_logo = models.ImageField(upload_to="home/", blank=True, null=True)
     left_title = models.CharField(max_length=120, default="Callen Kennels")
     left_blurb = models.TextField(blank=True)
     left_image = models.ImageField(upload_to="home/", blank=True, null=True)
@@ -244,6 +246,7 @@ class Homepage(models.Model):
     )
 
     # Right block (Ruff House)
+    right_small_logo = models.ImageField(upload_to="home/", blank=True, null=True)
     right_title = models.CharField(max_length=160, default="Ruff House Dog Supplies LLC")
     right_blurb = models.TextField(blank=True)
     right_image = models.ImageField(upload_to="home/", blank=True, null=True)

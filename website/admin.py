@@ -73,10 +73,39 @@ class SupplyItemAdmin(admin.ModelAdmin):
 class HomepageAdmin(admin.ModelAdmin):
     list_display = ("__str__", "updated_at")
     fieldsets = (
-        (None, {"fields": ("heading",)}),
-        ("Left block (Callen Kennels)", {"fields": ("left_title","left_blurb","left_image","left_link", "left_button_label")}),
-        ("Right block (Ruff House)", {"fields": ("right_title","right_blurb","right_image","right_link", "right_button_label")}),
-        ("Contact", {"fields": ("contact_heading","contact_name","contact_phone","contact_email","contact_address")}),
+        ("Header", {"fields": ("heading", "subheading")}),
+
+        ("Top images (big logos)", {"fields": ("left_image", "right_image")}),
+
+        ("Left block (Callen Kennels)", {
+            "fields": (
+                "left_small_logo",
+                "left_title",
+                "left_blurb",
+                "left_link",
+                "left_button_label",
+            )
+        }),
+
+        ("Right block (Ruff House)", {
+            "fields": (
+                "right_small_logo",
+                "right_title",
+                "right_blurb",
+                "right_link",
+                "right_button_label",
+            )
+        }),
+
+        ("Contact", {
+            "fields": (
+                "contact_heading",
+                "contact_name",
+                "contact_phone",
+                "contact_email",
+                "contact_address",
+            )
+        }),
     )
 
     def has_add_permission(self, request):

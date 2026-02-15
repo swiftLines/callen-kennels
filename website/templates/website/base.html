@@ -4,120 +4,51 @@
   <meta charset="utf-8" />
   <title>{% block title %}Callen Kennels{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- <link href="https://unpkg.com/mvp.css" rel="stylesheet"> -->
-</head>
-<body>
-  <header class="site-header">
-    <div class="top-accent"></div>
-
-    <nav class="site-nav">
-    <a class="nav-link" href="{% url 'home' %}">Home</a>
-
-    <div class="nav-dropdown">
-      <button class="nav-dropbtn" type="button">
-        About Callen Kennels <span class="chev">▾</span>
-      </button>
-      <div class="nav-dropdown-menu">
-        <a href="{% url 'about' %}">Callen Kennels</a>
-        <a href="{% url 'about_breed' %}">The Breed</a>
-      </div>
-    </div>
-
-    <div class="nav-dropdown">
-      <button class="nav-dropbtn" type="button">
-        Puppies <span class="chev">▾</span>
-      </button>
-      <div class="nav-dropdown-menu">
-        <a href="{% url 'puppies_available' %}">Available Now</a>
-        <a href="{% url 'litters_past' %}">Past Puppies</a>
-      </div>
-    </div>
-
-    <div class="nav-dropdown">
-      <button class="nav-dropbtn" type="button">
-        My Dogs <span class="chev">▾</span>
-      </button>
-      <div class="nav-dropdown-menu">
-        <a href="{% url 'dogs_girls' %}">My Girls</a>
-        <a href="{% url 'dogs_boys' %}">My Boys</a>
-      </div>
-    </div>
-
-    <div class="nav-dropdown">
-      <button class="nav-dropbtn" type="button">
-        Ruff House Dog Supplies <span class="chev">▾</span>
-      </button>
-      <div class="nav-dropdown-menu">
-        <a href="{% url 'supplies_list' %}">Supplies</a>
-      </div>
-    </div>
-    </nav>
-  </header>
-
-  <main>
-    {% block content %}{% endblock %}
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-
-    <div class="footer-col footer-left">
-      <div class="footer-contact-line">518-XXx-XXXX</div>
-      <div class="footer-contact-line">tsuc4954@gmail.com</div>
-      <div class="footer-contact-line">140 Littner Rd, Rensselaerville, NY</div>
-    </div>
-
-    <div class="footer-col footer-mid">
-      <div class="footer-title">Callen Kennels</div>
-      <a class="footer-link" href="{% url 'about' %}">About Us</a>
-      <a class="footer-link" href="{% url 'puppies_available' %}">Available Puppies</a>
-      <a class="footer-link" href="{% url 'dogs_girls' %}">My Girls</a>
-      <a class="footer-link" href="{% url 'dogs_boys' %}">My Boys</a>
-    </div>
-
-    <div class="footer-col footer-right">
-      <div class="footer-title">Ruff House Dog Supplies</div>
-      <a class="footer-link" href="{% url 'supplies_list' %}">Shop Supplies</a>
-    </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      <small>© {% now "Y" %} Callen Kennels</small>
-    </div>
-  </footer>
 
   <style>
     :root{
-      --maroon: #5b0a0a;
+      --maroon: #550403;
       --maroon-dark: #3e0707;
-      --nav-dark: #2f2f2f;
-      --cream: #f2eedf;
-      /* --frame: #bfbfbf; */
+      --nav-dark: #2B2B2B;
+      --cream: #F7F3E9;
     }
 
     /* Global reset + cream background everywhere */
-    html, body {
+    * { box-sizing: border-box; }
+
+    html, body{
       height: 100%;
       margin: 0;
       padding: 0;
       background: var(--cream);
+      font-family: Georgia, "Times New Roman", serif;
+      color: #111;
     }
 
-    /* Make footer sit at the bottom even on short pages */
-    body {
+    /* Sticky footer layout */
+    body{
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* main grows, footer stays bottom */
-    main {
+    main{
       flex: 1;
-      padding: 30px 0 0 0; /* you can tweak this */
+      padding: 30px 0 0 0;
     }
 
-    /* header */
+    /* Content width helper (use inside templates) */
+    .container{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px 40px 40px;
+    }
+
+    @media (max-width: 900px){
+      .container{ padding: 0 20px 30px 20px; }
+    }
+
+    /* Header / Nav */
     .site-header{ margin: 0; padding: 0; }
     .top-accent{
       height: 10px;
@@ -125,22 +56,31 @@
     }
 
     .site-nav{
+      width: 100%;
       background: var(--nav-dark);
       display: flex;
       gap: 18px;
       align-items: center;
+      justify-content: space-evenly;
       padding: 10px 18px;
       border-bottom: 2px solid #1f1f1f;
+      position: relative;
+      z-index: 1000;
     }
 
     .nav-link{
-      color: #fff !important;
+      color: #fff;
       text-decoration: none;
       font-size: 0.95rem;
+      font-weight: 600;
+      padding: 6px 6px;
     }
     .nav-link:hover{ text-decoration: underline; }
 
-    .nav-dropdown{ position: relative; }
+    .nav-dropdown{
+      position: relative;
+      display: inline-block;
+    }
 
     .nav-dropbtn{
       background: transparent;
@@ -149,54 +89,89 @@
       cursor: pointer;
       padding: 6px 6px;
       font-size: 0.95rem;
+      font-weight: 600;
     }
-    .nav-dropbtn:hover{ text-decoration: underline; }
 
-    .chev{ margin-left: 6px; opacity: 0.9; }
+    .nav-dropbtn:focus{
+      outline: 2px solid rgba(255,255,255,0.35);
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
 
+    .chev{
+      margin-left: 6px;
+      opacity: 0.9;
+      font-size: 0.9em;
+    }
+
+    /* Default hidden */
     .nav-dropdown-menu{
       display: none;
       position: absolute;
-      top: 36px;
+      top: 38px;
       left: 0;
-      min-width: 220px;
+      min-width: 230px;
       background: #fff;
       border: 1px solid #ddd;
       box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-      z-index: 999;
+      z-index: 9999;
+      padding: 6px 0;
     }
 
     .nav-dropdown-menu a{
       display: block;
       padding: 10px 12px;
-      color: #111 !important;
+      color: #111;
       text-decoration: none;
       font-size: 0.92rem;
+      white-space: nowrap;
     }
     .nav-dropdown-menu a:hover{ background: #f4f4f4; }
 
-    .nav-dropdown:hover .nav-dropdown-menu{ display: block; }
+    /* Open state (toggled by JS) */
+    .nav-dropdown.open .nav-dropdown-menu{
+      display: block;
+    }
 
-    /* footer */
+    /* Mobile nav wrap */
+    @media (max-width: 900px){
+      .site-nav{
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .nav-dropdown-menu{
+        position: absolute;
+      }
+    }
+
+    /* Footer */
     .site-footer{
       margin-top: 40px;
       background: var(--maroon);
       color: #fff;
+      width: 100%;
     }
 
     .footer-inner{
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 22px 24px;
+      padding: 34px 40px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 26px;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+      gap: 34px;
       align-items: start;
+    }
+
+    .footer-vline{
+      width: 1px;
+      background: rgba(255,255,255,0.35);  /* visible but not harsh */
+      align-self: stretch;                 /* full height of the footer row */
     }
 
     .footer-title{
       font-weight: 800;
-      margin-bottom: 10px;
+      font-size: 1.1rem;     /* bigger section headings */
+      margin: 0 0 12px 0;
     }
 
     .footer-contact-line{
@@ -207,9 +182,9 @@
 
     .footer-link{
       display: block;
-      color: #fff !important;
+      color: #fff;
       text-decoration: none;
-      margin: 8px 0;
+      margin: 10px 0;
       font-size: 0.95rem;
       opacity: 0.95;
     }
@@ -227,10 +202,126 @@
     }
 
     @media (max-width: 900px){
-      .site-nav{ flex-wrap: wrap; gap: 12px; }
-      .footer-inner{ grid-template-columns: 1fr; }
+      .footer-inner{
+        grid-template-columns: 1fr;
+        padding: 26px 20px;
+      }
+      .footer-vline{
+      display: none;
+      } 
     }
   </style>
+</head>
 
+<body>
+  <header class="site-header">
+    <div class="top-accent"></div>
+
+    <nav class="site-nav">
+      <a class="nav-link" href="{% url 'home' %}">Home</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropbtn" type="button">
+          About Callen Kennels <span class="chev">▾</span>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="{% url 'about' %}">Callen Kennels</a>
+          <a href="{% url 'about_breed' %}">The Breed</a>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropbtn" type="button">
+          Puppies <span class="chev">▾</span>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="{% url 'puppies_available' %}">Available Now</a>
+          <a href="{% url 'litters_past' %}">Past Puppies</a>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropbtn" type="button">
+          My Dogs <span class="chev">▾</span>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="{% url 'dogs_girls' %}">My Girls</a>
+          <a href="{% url 'dogs_boys' %}">My Boys</a>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropbtn" type="button">
+          Ruff House Dog Supplies <span class="chev">▾</span>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="{% url 'supplies_list' %}">Supplies</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col footer-left">
+        <div class="footer-contact-line">518-944-6906</div>
+        <div class="footer-contact-line">tsuc4954@gmail.com</div>
+        <div class="footer-contact-line">140 Littner Rd, Rensselaerville, NY</div>
+      </div>
+
+      <div class="footer-vline" aria-hidden="true"></div>
+
+      <div class="footer-col footer-mid">
+        <div class="footer-title">Callen Kennels</div>
+        <a class="footer-link" href="{% url 'about' %}">About Us</a>
+        <a class="footer-link" href="{% url 'puppies_available' %}">Available Puppies</a>
+        <a class="footer-link" href="{% url 'dogs_girls' %}">My Girls</a>
+        <a class="footer-link" href="{% url 'dogs_boys' %}">My Boys</a>
+      </div>
+
+      <div class="footer-vline" aria-hidden="true"></div>
+
+      <div class="footer-col footer-right">
+        <div class="footer-title">Ruff House Dog Supplies</div>
+        <a class="footer-link" href="{% url 'supplies_list' %}">Shop Supplies</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <small>© {% now "Y" %} Callen Kennels</small>
+    </div>
+  </footer>
+
+  <script>
+    // Click-to-open dropdowns (works on desktop + mobile)
+    (function () {
+      const dropdowns = document.querySelectorAll(".nav-dropdown");
+
+      function closeAll(except=null){
+        dropdowns.forEach(d => {
+          if (d !== except) d.classList.remove("open");
+        });
+      }
+
+      dropdowns.forEach(d => {
+        const btn = d.querySelector(".nav-dropbtn");
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const willOpen = !d.classList.contains("open");
+          closeAll();
+          if (willOpen) d.classList.add("open");
+        });
+      });
+
+      document.addEventListener("click", () => closeAll());
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeAll();
+      });
+    })();
+  </script>
 </body>
 </html>
