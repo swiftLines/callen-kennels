@@ -14,26 +14,13 @@
       </h1>
     </div>
   {% if items %}
-    {% for item in items %}
-      {% include "website/_supply_detail_block.html" with item=item %}
-    {% endfor %}
+    <div class="supplies-grid">
+      {% for item in items %}
+        {% include "website/_supply_detail_block.html" with item=item %}
+      {% endfor %}
+    </div>
   {% else %}
     <p style="margin: 20px 70px;">No items listed yet.</p>
-    {% comment %} <ul>
-      {% for item in items %}
-        <li style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem;">
-          {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.name }}" style="max-height:100px">{% endif %}
-          <div>
-            <a href="{% url 'supply_detail' slug=item.slug %}"><strong>{{ item.name }}</strong></a>
-            {% if item.category %}<div><small>{{ item.category }}</small></div>{% endif %}
-            {% if item.price %}<div>Price: ${{ item.price|floatformat:2 }}</div>{% endif %}
-            <div>Status: {% if item.in_stock %}In stock{% else %}Out of stock{% endif %}</div>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No items listed yet.</p> {% endcomment %}
   {% endif %}
 </div>
 
@@ -64,31 +51,30 @@
   line-height: 1.1;
 }
 
-@media (max-width: 900px) {
-  .supplies-box {
-    border-left: 0;
-    border-right: 0;
-  }
-  .supplies-top {
-    grid-template-columns: 1fr;
-    padding: 20px;
-    justify-items: center;
-  }
-  .supplies-heading {
-    font-size: 1.6rem;
-  }
+.supplies-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  padding: 20px 70px 40px 70px; /* matches your page spacing */
+  align-items: stretch;   /* makes all grid items same row height */
 }
 
-  .supply-card {
-    margin: 30px 70px;
-    padding-bottom: 25px;
+.supply-card {
+    height: 100%;
+    display: flex;             /* Widens Item Images */
+    flex-direction: column;
+    margin: 0;                 /* IMPORTANT: remove the 70px margins */
+    padding: 0 0 25px 0;       /* keep your inner spacing if you want */
     border-bottom: 1px solid #ddd;
-  }
+  }  
 
   .supply-name {
     margin: 0 0 10px 0;
     font-size: 1.4rem;
     font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .supply-image {
@@ -103,21 +89,49 @@
     margin: 0 0 10px 0;
   }
 
-  .supply-description {
-    white-space: pre-wrap;
-    max-width: 850px;
-    line-height: 1.5;
-  }
-
-  @media (max-width: 900px) {
-    .supply-card { margin: 20px; }
-    .supply-image { width: 100%; max-height: none; }
-  }
-
   .supply-desc-title {
   margin: 18px 0 8px 0;
   font-size: 1.05rem;
   font-weight: 700;
   }
+
+  .supply-description {
+    white-space: pre-wrap;
+    max-width: 850px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;   /* change 3 to 2 or 4 if you want */
+    overflow: hidden;
+  }
+
+  /* Responsive: 2 across, then 1 across */
+@media (max-width: 1100px){
+  .supplies-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+  @media (max-width: 900px) {
+    .supplies-box {
+    border-left: 0;
+    border-right: 0;
+  }
+  .supplies-top {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    justify-items: center;
+  }
+  .supplies-heading {
+    font-size: 1.6rem;
+  }
+    .supply-card { margin: 20px; }
+    .supply-image { width: 100%; max-height: none; }
+  }
+
+  @media (max-width: 700px){
+  .supplies-grid{
+    grid-template-columns: 1fr;
+    padding: 20px 20px 30px 20px;
+  }
+}
 </style>  
 {% endblock %}
