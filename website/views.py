@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 from django.utils import timezone
-from .models import Page, Dog, Litter, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage, PuppiesPage, SuppliesPage,GirlsPage, BoysPage, PastLittersPage, PastPuppy
+from .models import Page, Dog, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage, PuppiesPage, SuppliesPage,GirlsPage, BoysPage, PastLittersPage, PastPuppy, UpcomingEvent
 
 
 class HomeView(TemplateView):
@@ -69,14 +69,14 @@ class PuppyAvailableListView(ListView):
     model = Puppy
     template_name = "website/puppies_available.html"
     context_object_name = "puppies"
-    queryset = Puppy.objects.filter(status=Puppy.AVAILABLE).select_related("litter", "litter__dam", "litter__sire")
+    # queryset = Puppy.objects.filter(status=Puppy.AVAILABLE).select_related("litter", "litter__dam", "litter__sire")
 
 
-class LitterUpcomingListView(ListView):
-    model = Litter
-    template_name = "website/litters_upcoming.html"
-    context_object_name = "litters"
-    queryset = Litter.objects.filter(status=Litter.UPCOMING).select_related("dam", "sire").order_by("expected_date")
+# class LitterUpcomingListView(ListView):
+#     model = Litter
+#     template_name = "website/litters_upcoming.html"
+#     context_object_name = "litters"
+#     queryset = Litter.objects.filter(status=Litter.UPCOMING).select_related("dam", "sire").order_by("expected_date")
 
 
 class LitterPastListView(ListView):
@@ -119,8 +119,14 @@ class SupplyListView(ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["supplies_page"] = SuppliesPage.objects.first()
+        supplies_page = SuppliesPage.objects.first()
+        ctx["supplies_page"] = supplies_page
+        if supplies_page:
+          ctx["upcoming_events"] = supplies_page.upcoming_events.filter(is_active=True).order_by("sort_order", "start_date", "start_time")
+        else:
+          ctx["upcoming_events"] = []
         return ctx
+
 
 class SupplyDetailView(DetailView):
     model = SupplyItem

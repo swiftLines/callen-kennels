@@ -12,7 +12,70 @@
       <h1 class="supplies-heading">
         {{ supplies_page.heading|default:"Ruff House Dog Supplies LLC" }}
       </h1>
-    </div>
+  </div>
+
+  <div class="supplies-boxes">
+
+    {% if supplies_page.show_box_1 %}
+      <section class="supplies-info-box">
+        <h2 class="supplies-info-title">
+          {{ supplies_page.box_1_title|default:"How to Purchase" }}
+        </h2>
+
+        {% if supplies_page.box_1_body %}
+          <div class="supplies-info-body">
+            {{ supplies_page.box_1_body|linebreaksbr }}
+          </div>
+        {% endif %}
+      </section>
+    {% endif %}
+
+    {% if supplies_page.show_box_2 %}
+      <section class="supplies-info-box">
+        <h2 class="supplies-info-title">
+          {{ supplies_page.box_2_title|default:"Upcoming Events" }}
+        </h2>
+
+        <div class="supplies-info-body">
+          {% if upcoming_events %}
+            <ul class="events-list">
+              {% for ev in upcoming_events %}
+                <li class="event-row">
+                  <div class="event-name">
+                    <strong>{{ ev.name }}</strong>
+                    {% if ev.location %}<span class="event-loc"> — {{ ev.location }}</span>{% endif %}
+                  </div>
+
+                  <div class="event-dates">
+                    {% if ev.start_date and ev.end_date %}
+                      {% if ev.start_date == ev.end_date %}
+                        {{ ev.start_date|date:"M j, Y" }}
+                      {% else %}
+                        {{ ev.start_date|date:"M j, Y" }} – {{ ev.end_date|date:"M j, Y" }}
+                      {% endif %}
+                    {% elif ev.start_date %}
+                      {{ ev.start_date|date:"M j, Y" }}
+                    {% endif %}
+
+                    {% if ev.start_time or ev.end_time %}
+                      <div class="event-times">
+                        {% if ev.start_time %}{{ ev.start_time|time:"g:i A" }}{% endif %}
+                        {% if ev.end_time %}– {{ ev.end_time|time:"g:i A" }}{% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p style="margin:0;">No upcoming events listed yet.</p>
+          {% endif %}
+        </div>
+      </section>
+    {% endif %}
+
+  </div>
+
   {% if items %}
     <div class="supplies-grid">
       {% for item in items %}
@@ -51,6 +114,80 @@
   line-height: 1.1;
 }
 
+.supplies-boxes{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 28px;
+  padding: 10px 70px 10px 70px; /* aligns with your supplies-grid padding */
+  justify-content: center;   /* centers single box */
+}
+
+.supplies-info-box{
+  background: #F5EEDC;               /* warm beige like mock */
+  border: 2px solid #222;            /* strong outline */
+  padding: 16px 18px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.supplies-info-title{
+  margin: 0 0 10px 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-align: center;                /* like your screenshot */
+}
+
+.supplies-info-body{
+  font-size: 0.98rem;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0;  
+}
+
+.events-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-row{
+  padding: 10px 0;
+  border-top: 1px solid rgba(0,0,0,0.18);
+}
+
+.event-row:first-child{
+  border-top: 0;
+  padding-top: 0;
+}
+
+.event-name{
+  margin: 0 0 4px 0;
+}
+
+.event-dates{
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.events-list .event-row:last-child {
+  padding-bottom: 0;
+}
+
+.events-list,
+.event-row,
+.event-name,
+.event-dates{
+  text-align: center;
+}
+
+.event-times{
+  margin-top: 4px;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  opacity: 0.9;
+}
+
 .supplies-grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -61,7 +198,7 @@
 
 .supply-card {
     height: 100%;
-    display: flex;             /* Widens Item Images */
+    {% comment %} display: flex;             /* Widens Item Images */ {% endcomment %}
     flex-direction: column;
     margin: 0;                 /* IMPORTANT: remove the 70px margins */
     padding: 0 0 25px 0;       /* keep your inner spacing if you want */
@@ -123,6 +260,12 @@
   .supplies-heading {
     font-size: 1.6rem;
   }
+
+  .supplies-boxes{
+      grid-template-columns: 1fr;
+      padding: 10px 20px 10px 20px;
+    }
+
     .supply-card { margin: 20px; }
     .supply-image { width: 100%; max-height: none; }
   }

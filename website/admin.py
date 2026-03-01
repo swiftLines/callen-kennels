@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 from . import models
 
@@ -31,13 +32,13 @@ class PuppyInline(admin.TabularInline):
     show_change_link = True
 
 
-@admin.register(models.Litter)
-class LitterAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "dam", "sire", "status", "expected_date", "whelp_date")
-    list_filter = ("status", "dam", "sire")
-    search_fields = ("name", "dam__name", "sire__name", "notes")
-    prepopulated_fields = {"slug": ("name",)}
-    inlines = [PuppyInline]
+# @admin.register(models.Litter)
+# class LitterAdmin(admin.ModelAdmin):
+#     list_display = ("__str__", "dam", "sire", "status", "expected_date", "whelp_date")
+#     list_filter = ("status", "dam", "sire")
+#     search_fields = ("name", "dam__name", "sire__name", "notes")
+#     prepopulated_fields = {"slug": ("name",)}
+#     inlines = [PuppyInline]
 
 
 @admin.register(models.Puppy)
@@ -168,10 +169,60 @@ class PuppiesPageAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
 
 
+class UpcomingEventInlineForm(forms.ModelForm):
+    class Meta:
+        model = models.UpcomingEvent
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Accept 12-hour input
+        for f in ("start_time", "end_time"):
+            self.fields[f].input_formats = ["%I:%M %p"]
+            self.fields[f].help_text = "Example: 10:00 AM"
+
+            self.fields[f].widget = forms.TimeInput(
+                format="%I:%M %p",
+                attrs={"placeholder": "10:00 AM"}
+            )
+
+
+class UpcomingEventInline(admin.TabularInline):
+    model = models.UpcomingEvent
+    form = UpcomingEventInlineForm
+    extra = 0
+    fields = ("sort_order", "is_active", "name", "location", "start_date", "end_date", "start_time", "end_time")
+    ordering = ("sort_order", "start_date", "start_time")
+
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        formfield = super().formfield_for_dbfield(db_field, request, **kwargs)
+
+        if db_field.name in ("start_time", "end_time"):
+            formfield.widget = forms.TextInput(attrs={"placeholder": "10:00 AM"})
+        return formfield
+
+
 @admin.register(models.SuppliesPage)
 class SuppliesPageAdmin(admin.ModelAdmin):
     list_display = ("__str__", "updated_at")
-    fields = ("title", "heading", "header_image")
+    fields = (
+        "title", 
+        "heading", 
+        "header_image",
+        
+        # Box 1 (How to Purchase)
+        "show_box_1",
+        "box_1_title",
+        "box_1_body",
+
+        # Box 2 (Upcoming Events)
+        "show_box_2",
+        "box_2_title",
+        )
+
+    # allow managing the dates list inline (and optionally a 2nd inline if you created a 2nd related model)
+    inlines = [UpcomingEventInline]
 
     def has_add_permission(self, request):
         if models.SuppliesPage.objects.exists():

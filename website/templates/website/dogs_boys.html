@@ -14,7 +14,7 @@
       </h1>
     </div>
     
-    <ul>
+    <ul class="dogs-list">
       {% if dogs %}
         {% for d in dogs %}
           {% include "website/_dog_detail_block.html" with dog=d %}
@@ -22,14 +22,6 @@
       {% else %}
         <p style="margin: 20px 70px;">No dogs yet.</p>
       {% endif %}
-      {% comment %} {% for d in dogs %}
-        {% include "website/_dog_detail_block.html" with dog=dog %}
-        <li>
-          {% if d.photo %}<img src="{{ d.photo.url }}" alt="" style="max-height:140px">{% endif %}
-          <a href="{% url 'dog_detail' slug=d.slug %}"><strong>{{ d.name }}</strong></a> — {{ d.color }}
-          {% if d.retired %}<span style="opacity:.8; font-size:.9em;">(Retired)</span>{% endif %}
-        </li>
-      {% empty %}<li>No dogs yet.</li>{% endfor %} {% endcomment %}
     </ul>
   </div>
 
@@ -82,12 +74,28 @@
   font-size: 1.4rem;
 }
 
-.dog-photo {
-  display: block;
-  max-height: 240px;
-  width: auto;
-  margin: 0 0 10px 0;
+.dogs-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 4-across photo layout (fills from left like Puppies) */
+.dog-photos{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: flex-start;
+}
+
+.dog-photos img{
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
   border: 1px solid #ccc;
+  display: block;
 }
 
 .dog-meta {
@@ -104,9 +112,13 @@
   .dog-card {
     margin: 20px;
   }
-  .dog-photo {
+  .dog-photos{
+    justify-content: center;
+  }
+  .dog-photos img{
     width: 100%;
-    max-height: none;
+    max-width: 360px;
+    height: auto;
   }
 }
   </style>

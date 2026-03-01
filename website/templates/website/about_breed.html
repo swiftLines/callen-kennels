@@ -56,18 +56,11 @@
 
 /* Top row: logo left, title centered */
 .breed-top{
-  display: grid;
-  grid-template-columns: 260px 1fr 260px; /* logo | title | spacer */
+  display: flex;
+  justify-content: center; 
   align-items: center;
-  gap: 30px;
+  gap: 60px;
   margin: 0 auto 18px auto;
-}
-
-.breed-logo{
-  width: 240px;
-  height: auto;
-  display: block;
-  justify-self: start;
 }
 
 .breed-heading{
@@ -76,6 +69,15 @@
   font-size: 2rem;
   font-weight: 800;
   line-height: 1.1;
+  justify-self: center;
+}
+
+.breed-logo{
+  width: 240px;
+  height: auto;
+  display: block;
+  margin: 0;
+  flex: 0 0 240px; 
 }
 
 /* Content column centered under the heading */
@@ -101,9 +103,14 @@
 /* Mobile */
 @media (max-width: 900px){
   .breed-top{
-    grid-template-columns: 1fr;
-    justify-items: center;
+    flex-direction: column;
+
     gap: 14px;
+  }
+
+  .breed-logo{
+    width: 200px;          /* prevents the “huge logo” feeling */
+    height: auto;
   }
 
   .breed-heading{

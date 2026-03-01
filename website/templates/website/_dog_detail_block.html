@@ -1,9 +1,16 @@
-<div class="dog-card">
+<li class="dog-card">
   <h2 class="dog-name">{{ dog.name }}</h2>
 
-  {% if dog.photo %}
-    <img src="{{ dog.photo.url }}" alt="{{ dog.name }}" class="dog-photo">
-  {% endif %}
+  <div class="dog-photos">
+    {% if dog.photo_1 %}
+      <img src="{{ dog.photo_1.url }}" alt="{{ dog.name }}" class="dog-photo">{% endif %}
+    {% if dog.photo_2 %}
+      <img src="{{ dog.photo_2.url }}" alt="{{ dog.name }} photo 2">{% endif %}
+    {% if dog.photo_3 %}
+      <img src="{{ dog.photo_3.url }}" alt="{{ dog.name }} photo 3">{% endif %}
+    {% if dog.photo_4 %}
+      <img src="{{ dog.photo_4.url }}" alt="{{ dog.name }} photo 4">{% endif %}
+  </div>
 
   <p class="dog-meta">
     Sex: {{ dog.get_sex_display }}
@@ -13,4 +20,4 @@
   {% if dog.bio %}
     <p class="dog-bio">{{ dog.bio }}</p>
   {% endif %}
-</div>
+</li>

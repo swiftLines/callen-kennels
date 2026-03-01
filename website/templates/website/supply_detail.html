@@ -10,11 +10,10 @@
   <p><strong>Status:</strong> {% if object.in_stock %}In stock{% else %}Out of stock{% endif %}</p>
 
   {% if object.description %}
-    <h2>Description</h2>
+    <h2>Description:</h2>
     <div style="white-space:pre-wrap">{{ object.description }}</div>
   {% endif %}
 
   <hr>
-  <p><em>To inquire or order:</em> please use the Contact page.</p>
 </article>
 {% endblock %}

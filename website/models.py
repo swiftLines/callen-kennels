@@ -53,7 +53,10 @@ class Dog(TimeStampedModel):
     color = models.CharField(max_length=120, blank=True)
     bio = models.TextField(blank=True)
 
-    photo = models.ImageField(upload_to="dogs/photos/", blank=True, null=True)
+    photo_1 = models.ImageField(upload_to="dogs/photos/", blank=True, null=True)
+    photo_2= models.ImageField(upload_to="dogs/photos/", blank=True, null=True)
+    photo_3 = models.ImageField(upload_to="dogs/photos/", blank=True, null=True)
+    photo_4 = models.ImageField(upload_to="dogs/photos/", blank=True, null=True)
     retired = models.BooleanField(default=False)
 
     class Meta:
@@ -78,42 +81,42 @@ class Dog(TimeStampedModel):
         return self.sex == self.MALE
 
 
-class Litter(TimeStampedModel):
-    UPCOMING = "UPCOMING"
-    PAST = "PAST"
-    STATUS_CHOICES = [(UPCOMING, "Upcoming"), (PAST, "Past")]
+# class Litter(TimeStampedModel):
+#     UPCOMING = "UPCOMING"
+#     PAST = "PAST"
+#     STATUS_CHOICES = [(UPCOMING, "Upcoming"), (PAST, "Past")]
 
-    name = models.CharField(
-        max_length=140,
-        help_text="Optional display name (e.g., 'Spring 2025 – Daisy × Max')",
-        blank=True,
-    )
-    slug = models.SlugField(max_length=160, unique=True, blank=True)
+#     name = models.CharField(
+#         max_length=140,
+#         help_text="Optional display name (e.g., 'Spring 2025 – Daisy × Max')",
+#         blank=True,
+#     )
+#     slug = models.SlugField(max_length=160, unique=True, blank=True)
 
-    dam = models.ForeignKey(Dog, on_delete=models.PROTECT, related_name="litters_as_dam")
-    sire = models.ForeignKey(Dog, on_delete=models.PROTECT, related_name="litters_as_sire")
+#     dam = models.ForeignKey(Dog, on_delete=models.PROTECT, related_name="litters_as_dam")
+#     sire = models.ForeignKey(Dog, on_delete=models.PROTECT, related_name="litters_as_sire")
 
-    expected_date = models.DateField(blank=True, null=True)
-    whelp_date = models.DateField(blank=True, null=True)
-    notes = models.TextField(blank=True)
-    status = models.CharField(max_length=16, choices=STATUS_CHOICES, default=UPCOMING)
+#     expected_date = models.DateField(blank=True, null=True)
+#     whelp_date = models.DateField(blank=True, null=True)
+#     notes = models.TextField(blank=True)
+#     status = models.CharField(max_length=16, choices=STATUS_CHOICES, default=UPCOMING)
 
-    class Meta:
-        ordering = ["-expected_date", "-whelp_date", "-created_at"]
+#     class Meta:
+#         ordering = ["-expected_date", "-whelp_date", "-created_at"]
 
-    def __str__(self):
-        label = self.name or f"{self.dam.name} × {self.sire.name}"
-        return f"{label} ({self.status})"
+#     def __str__(self):
+#         label = self.name or f"{self.dam.name} × {self.sire.name}"
+#         return f"{label} ({self.status})"
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            base = self.name or f"{self.dam.name}-{self.sire.name}"
-            self.slug = slugify(base)[:160]
-        super().save(*args, **kwargs)
+#     def save(self, *args, **kwargs):
+#         if not self.slug:
+#             base = self.name or f"{self.dam.name}-{self.sire.name}"
+#             self.slug = slugify(base)[:160]
+#         super().save(*args, **kwargs)
 
-    @property
-    def available_puppies(self):
-        return self.puppies.filter(status=Puppy.AVAILABLE)
+#     @property
+#     def available_puppies(self):
+#         return self.puppies.filter(status=Puppy.AVAILABLE)
 
 
 class Puppy(TimeStampedModel):
@@ -130,13 +133,14 @@ class Puppy(TimeStampedModel):
     MALE = "M"
     SEX_CHOICES = [(FEMALE, "Female"), (MALE, "Male")]
 
-    litter = models.ForeignKey(Litter, on_delete=models.CASCADE, related_name="puppies")
+    litter = models.CharField(max_length=120, blank=True)
+    # litter = models.ForeignKey(Litter, on_delete=models.CASCADE, related_name="puppies")
     name = models.CharField(max_length=120, blank=True)
     birth_date = models.DateField(blank=True, null=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, blank=True)
     color = models.CharField(max_length=120, blank=True)
 
-    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    price = models.DecimalField(max_digits=5, decimal_places=0,blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=AVAILABLE)
 
      # up to 4 photos
@@ -144,7 +148,7 @@ class Puppy(TimeStampedModel):
     photo_2 = models.ImageField(upload_to="puppies/", blank=True, null=True)
     photo_3 = models.ImageField(upload_to="puppies/", blank=True, null=True)
     photo_4 = models.ImageField(upload_to="puppies/", blank=True, null=True)
-    # health_notes = models.TextField(blank=True)
+    description = models.TextField(blank=True)
     # contract_pdf = models.FileField(upload_to="puppies/contracts/", blank=True, null=True)
 
     class Meta:
@@ -365,6 +369,15 @@ class SuppliesPage(models.Model):
     )
     updated_at = models.DateTimeField(auto_now=True)
 
+    # Box 1 (How to Purchase)
+    show_box_1 = models.BooleanField(default=True)
+    box_1_title = models.CharField(max_length=120, blank=True, default="How to Purchase")
+    box_1_body = models.TextField(blank=True)
+
+    # Box 2 (Upcoming Events) toggle + title only
+    show_box_2 = models.BooleanField(default=True)
+    box_2_title = models.CharField(max_length=120, blank=True, default="Upcoming Events")
+
     class Meta:
         verbose_name = "Ruff House Supplies Page"
         verbose_name_plural = "Ruff House Supplies Page"
@@ -398,6 +411,29 @@ class GirlsPage(models.Model):
 
     def __str__(self):
         return "My Girls Page"
+    
+
+class UpcomingEvent(models.Model):
+    supplies_page = models.ForeignKey(
+        SuppliesPage,
+        on_delete=models.CASCADE,
+        related_name="upcoming_events"
+    )
+
+    name = models.CharField(max_length=120, default="Event")
+    location = models.CharField(max_length=160, blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    start_time= models.TimeField(blank=True, null=True)
+    end_time = models.TimeField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["sort_order", "start_date", "start_time"]
+
+    def __str__(self):
+        return f"{self.name} ({self.start_date:%Y-%m-%d})"
 
 
 class BoysPage(models.Model):

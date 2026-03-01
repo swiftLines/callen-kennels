@@ -11,7 +11,7 @@ urlpatterns = [
 
     # Puppies & Litters
     path("puppies/available/", views.PuppyAvailableListView.as_view(), name="puppies_available"),
-    path("litters/upcoming/", views.LitterUpcomingListView.as_view(), name="litters_upcoming"),
+    # path("litters/upcoming/", views.LitterUpcomingListView.as_view(), name="litters_upcoming"),
     path("litters/past/", views.LitterPastListView.as_view(), name="litters_past"),
 
     # Dogs
