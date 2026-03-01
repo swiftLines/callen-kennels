@@ -44,7 +44,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 INSTALLED_APPS = [
     "cloudinary_storage",
-    "cloudinary",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -157,6 +156,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
