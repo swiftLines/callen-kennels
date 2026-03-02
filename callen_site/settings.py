@@ -43,6 +43,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Application definition
 
 INSTALLED_APPS = [
+    "cloudinary",
     "cloudinary_storage",
     "django.contrib.admin",
     "django.contrib.auth",
