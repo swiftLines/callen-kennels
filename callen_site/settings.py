@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os, dj_database_url
 from dotenv import load_dotenv
-
+# Main Change 1
 load_dotenv()  # reads .env from the project root
 # print("DB:", os.getenv("DB_USER"), os.getenv("DB_NAME"))
 
