@@ -14,6 +14,23 @@
       {{ puppies_page.heading|default:"Available Puppies" }}
     </h1>
   </div>
+
+  {% if puppies_page.show_box_1 %}
+    <div class="puppies-boxes">
+      <section class="puppies-info-box">
+        <h2 class="puppies-info-title">
+          {{ puppies_page.box_1_title }}
+        </h2>
+
+        {% if puppies_page.box_1_body %}
+          <div class="puppies-info-body">
+            {{ puppies_page.box_1_body|linebreaksbr }}
+          </div>
+        {% endif %}
+      </section>
+    </div>
+  {% endif %}
+
 {% comment %} <div class="container puppies-page">
   <div class="puppies-top">
     <!-- top logo + heading (admin-controlled) -->
@@ -58,6 +75,38 @@
 </div>
 
 <style>
+  .puppies-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 28px;
+    padding: 10px 70px 10px 70px;
+    justify-content: center;
+  }
+
+  .puppies-info-box {
+    background: #F5EEDC;
+    border: 2px solid #222;
+    padding: 16px 18px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .puppies-info-title {
+    margin: 0 0 10px 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .puppies-info-body {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    text-align: center;
+    margin: 0;
+  }
+
   {% comment %} .puppies-page{
   padding-top: 26px;  /* matches home */
   padding-bottom: 0;  /* footer spacing controlled globally */

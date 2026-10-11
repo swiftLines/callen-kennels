@@ -153,6 +153,8 @@ class Puppy(TimeStampedModel):
 
     class Meta:
         ordering = ["litter", "name"]
+        verbose_name = "Puppy"
+        verbose_name_plural = "Puppies"
 
     def __str__(self):
         base = self.name or "Puppy"
@@ -341,6 +343,11 @@ class PuppiesPage(models.Model):
         help_text="Image shown at the top of the page (e.g. Callen logo)."
     )
     updated_at = models.DateTimeField(auto_now=True)
+
+    # Custom information box below the header
+    show_box_1 = models.BooleanField(default=False)
+    box_1_title = models.CharField(max_length=120, blank=True, default="")
+    box_1_body = models.TextField(blank=True)
 
     class Meta:
         verbose_name = "Puppies Available Page"

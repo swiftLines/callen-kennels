@@ -7,7 +7,7 @@
 
   {% if item.category %}<p><strong>Category:</strong> {{ item.category }}</p>{% endif %}
   {% if item.price %}<p><strong>Price:</strong> ${{ item.price|floatformat:2 }}</p>{% endif %}
-  <p><strong>Status:</strong> {% if item.in_stock %}In stock{% else %}Out of stock{% endif %}</p>
+  {% comment %} <p><strong>Status:</strong> {% if item.in_stock %}In stock{% else %}Out of stock{% endif %}</p> {% endcomment %}
 
   {% if item.description %}
     <h3 class="supply-desc-title">Description</h3>

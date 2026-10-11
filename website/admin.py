@@ -160,7 +160,16 @@ class AboutBreedPageAdmin(admin.ModelAdmin):
 @admin.register(models.PuppiesPage)
 class PuppiesPageAdmin(admin.ModelAdmin):
     list_display = ("__str__", "updated_at")
-    fields = ("title", "heading", "header_image")
+    fields = (
+        "title",
+        "heading",
+        "header_image",
+
+        # Custom information box
+        "show_box_1",
+        "box_1_title",
+        "box_1_body",
+    )
 
     def has_add_permission(self, request):
         # only one settings row
