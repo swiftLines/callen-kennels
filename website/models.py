@@ -135,6 +135,12 @@ class Puppy(TimeStampedModel):
 
     litter = models.CharField(max_length=120, blank=True)
     # litter = models.ForeignKey(Litter, on_delete=models.CASCADE, related_name="puppies")
+
+    sort_order = models.PositiveIntegerField(
+        default=0,
+        help_text="Lower numbers appear first on the Available Puppies page."
+    )
+
     name = models.CharField(max_length=120, blank=True)
     birth_date = models.DateField(blank=True, null=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, blank=True)
@@ -143,7 +149,7 @@ class Puppy(TimeStampedModel):
     price = models.DecimalField(max_digits=5, decimal_places=0,blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=AVAILABLE)
 
-     # up to 4 photos
+    # up to 4 photos
     photo_1 = models.ImageField(upload_to="puppies/", blank=True, null=True)
     photo_2 = models.ImageField(upload_to="puppies/", blank=True, null=True)
     photo_3 = models.ImageField(upload_to="puppies/", blank=True, null=True)
@@ -152,7 +158,7 @@ class Puppy(TimeStampedModel):
     # contract_pdf = models.FileField(upload_to="puppies/contracts/", blank=True, null=True)
 
     class Meta:
-        ordering = ["litter", "name"]
+        ordering = ["sort_order", "litter", "name"]
         verbose_name = "Puppy"
         verbose_name_plural = "Puppies"
 

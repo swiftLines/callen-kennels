@@ -64,21 +64,6 @@ class DogDetailView(DetailView):
     template_name = "website/dog_detail.html"
 
 
-# Litters & Puppies
-class PuppyAvailableListView(ListView):
-    model = Puppy
-    template_name = "website/puppies_available.html"
-    context_object_name = "puppies"
-    # queryset = Puppy.objects.filter(status=Puppy.AVAILABLE).select_related("litter", "litter__dam", "litter__sire")
-
-
-# class LitterUpcomingListView(ListView):
-#     model = Litter
-#     template_name = "website/litters_upcoming.html"
-#     context_object_name = "litters"
-#     queryset = Litter.objects.filter(status=Litter.UPCOMING).select_related("dam", "sire").order_by("expected_date")
-
-
 class LitterPastListView(ListView):
     model = PastPuppy
     template_name = "website/litters_past.html"
@@ -159,7 +144,7 @@ class PuppyAvailableListView(ListView):
     context_object_name = "puppies"
 
     def get_queryset(self):
-        return Puppy.objects.filter(status=Puppy.AVAILABLE).order_by("name")
+        return Puppy.objects.filter(status=Puppy.AVAILABLE).order_by("sort_order", "name")
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

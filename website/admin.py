@@ -43,9 +43,11 @@ class PuppyInline(admin.TabularInline):
 
 @admin.register(models.Puppy)
 class PuppyAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "status", "price", "updated_at")
+    list_display = ("__str__", "sort_order", "status", "price", "updated_at")
+    list_editable = ("sort_order",)
     list_filter = ("status", "sex", "litter")
     search_fields = ("name", "color", "health_notes")
+    ordering = ("sort_order", "name")
 
 
 @admin.register(models.GalleryImage)
