@@ -286,3 +286,14 @@ class PastPuppyAdmin(admin.ModelAdmin):
         "adult_photo",
         "is_published",
     )
+
+
+@admin.register(models.GalleryPage)
+class GalleryPageAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "updated_at")
+    fields = ("title", "heading", "header_image")
+
+    def has_add_permission(self, request):
+        if models.GalleryPage.objects.exists():
+            return False
+        return super().has_add_permission(request)
