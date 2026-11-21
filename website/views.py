@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 from django.utils import timezone
-from .models import Page, Dog, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage, PuppiesPage, SuppliesPage,GirlsPage, BoysPage, PastLittersPage, PastPuppy, UpcomingEvent
+from .models import Page, Dog, Puppy, GalleryImage, Event, SupplyItem, Homepage, AboutPage, AboutBreedPage, PuppiesPage, SuppliesPage,GirlsPage, BoysPage, PastLittersPage, PastPuppy, UpcomingEvent, GalleryPage
 
 
 class HomeView(TemplateView):
@@ -85,6 +85,23 @@ class GrownGalleryListView(ListView):
     template_name = "website/gallery_grown.html"
     context_object_name = "images"
     queryset = GalleryImage.objects.filter(is_published=True, category=GalleryImage.GROWN).order_by("-created_at")
+
+
+class GalleryListView(ListView):
+    model = GalleryImage
+    template_name = "website/gallery.html"
+    context_object_name = "images"
+
+    def get_queryset(self):
+        return GalleryImage.objects.filter(
+            is_published=True,
+            category=GalleryImage.GENERAL
+        ).order_by("-created_at")
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["gallery_page"] = GalleryPage.objects.first()
+        return ctx
 
 
 # Events
