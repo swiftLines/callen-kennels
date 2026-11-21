@@ -537,3 +537,30 @@ class PastPuppy(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class GalleryPage(models.Model):
+    title = models.CharField(
+        max_length=150,
+        default="Gallery • Callen Kennels",
+        help_text="Browser tab title."
+    )
+    heading = models.CharField(
+        max_length=150,
+        default="Gallery",
+        help_text="Big heading shown at the top of the Gallery page."
+    )
+    header_image = models.ImageField(
+        upload_to="gallery/header/",
+        blank=True,
+        null=True,
+        help_text="Image shown at the top of the Gallery page."
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Gallery Page"
+        verbose_name_plural = "Gallery Page"
+
+    def __str__(self):
+        return "Gallery Page"
