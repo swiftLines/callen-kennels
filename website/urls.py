@@ -20,6 +20,7 @@ urlpatterns = [
     # path("dogs/<slug:slug>/", views.DogDetailView.as_view(), name="dog_detail"),
 
     # Gallery
+    path("gallery/", views.GalleryListView.as_view(), name="gallery"),
     path("gallery/grown/", views.GrownGalleryListView.as_view(), name="gallery_grown"),
 
     # Events
